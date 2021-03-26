@@ -3,13 +3,14 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { UsersComponent } from './components/users/users.component';
-import { RecipesComponent } from './components/recipes/recipes.component';
-import { ListsComponent } from './components/lists/lists.component';
+import { UsersComponent } from './components/principal/users/users.component';
+import { RecipesComponent } from './components/principal/recipes/recipes.component';
+import { ListsComponent } from './components/principal/lists/lists.component';
 import { LoginComponent } from './components/login/login.component';
 import { RegistroComponent } from './components/registro/registro.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
-import { MainComponent } from './components/main/main.component';
+import { MainComponent } from './components/principal/main/main.component';
+import { PrincipalComponent } from './components/principal/principal.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { MainComponent } from './components/main/main.component';
     LoginComponent,
     RegistroComponent,
     NotFoundComponent,
-    MainComponent
+    MainComponent,
+    PrincipalComponent
   ],
   imports: [
     BrowserModule,
