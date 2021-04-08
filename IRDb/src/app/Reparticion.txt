@@ -1,0 +1,15 @@
+//Alonso
+index - copyright
+main - todo ya que inicia sesión 
+
+//Mariana
+login
+registro
+app - solo search bar
+
+//Eduardo
+users - perfil
+recipes - individual
+lists - lista de listas
+
+colores: rojo, naranja & amarillo 
