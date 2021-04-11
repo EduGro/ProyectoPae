@@ -1,6 +1,21 @@
-<p>principal works!</p>
-<p>Separadas rutas</p>
-<app-main></app-main>
-<app-lists></app-lists>
-<app-main></app-main>
-<app-users></app-users>
+<div class="searchbar">
+    <nav>
+        <ul>
+            <li>
+                <img src="../../../assets/iRDb.png" width="13%">
+            </li>
+            <li>
+                <div class="buscar">
+                    <input type="text" placeholder="Buscar recetas..." name="search">
+                    <button type="submit"><img src="../../../assets/search.png"></button>
+                </div>
+            </li>
+            <li>
+                <div class="enlaces">
+                    <a routerLink="/lists">Listas</a>
+                    <a routerLink="/login">Login</a>
+                </div>
+            </li>
+        </ul>
+    </nav>
+</div>
