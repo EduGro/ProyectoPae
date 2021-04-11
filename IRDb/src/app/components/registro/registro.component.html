@@ -1,1 +1,22 @@
-<p>registro works!</p>
+<form [formGroup]="form" (submit)="registrar()">
+    <div>
+        <label for="nombre">Nombre</label><br>
+        <input type="text" name="nombre" formControlName="nombre" [ngStyle]="{'border-color': form.controls.nombre.valid? '#ffff33' : 'darkred'}">
+    </div>
+    <div>
+        <label for="correo">Email</label><br>
+        <input type="email" name="correo" formControlName="correo" [ngStyle]="{'border-color': form.controls.correo.valid? '#ffff33' : 'darkred'}">
+    </div>
+    <div>
+        <label for="password">Contraseña</label><br>
+        <input type="password" name="password" formControlName="password" [ngStyle]="{'border-color': form.controls.password.valid? '#ffff33' : 'darkred'}">
+    </div>
+    <div>
+        <label for="confirmar">Confirmar contraseña</label><br>
+        <input type="password" name="confirmar" formControlName="confirmar" [ngStyle]="{'border-color': form.controls.confirmar.valid? '#ffff33' : 'darkred'}">
+    </div>
+    <div>
+        <button appClick="submit-register-user">Registrarse</button>
+    </div>
+    <a routerLink="/login">Regresar a login</a>
+</form>
