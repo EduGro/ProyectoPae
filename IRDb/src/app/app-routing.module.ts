@@ -12,13 +12,14 @@ import { PrincipalComponent } from './components/principal/principal.component';
 
 const routes: Routes = [
   {path:'', redirectTo: 'login', pathMatch: 'full'},
+  {path:'principal', redirectTo: 'main', pathMatch: 'full'},
   {path: 'main', component: MainComponent},
   { path: 'users', component: UsersComponent},
   { path: 'login', component: LoginComponent },
   { path: 'principal', component: PrincipalComponent},
   { path: 'register', component: RegistroComponent },
   { path: 'recipes', component: RecipesComponent},
-  { path: 'listas', component: ListsComponent},
+  { path: 'lists', component: ListsComponent},
   {path: "**", component: NotFoundComponent}
 ];
 
