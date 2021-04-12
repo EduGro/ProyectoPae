@@ -12,7 +12,6 @@ import { RegistroComponent } from './components/registro/registro.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
 import { MainComponent } from './components/principal/main/main.component';
 import { PrincipalComponent } from './components/principal/principal.component';
-import { ListDetailsComponent } from './components/principal/list-details/list-details.component';
 
 @NgModule({
   declarations: [
@@ -24,8 +23,7 @@ import { ListDetailsComponent } from './components/principal/list-details/list-d
     RegistroComponent,
     NotFoundComponent,
     MainComponent,
-    PrincipalComponent,
-    ListDetailsComponent
+    PrincipalComponent
   ],
   imports: [
     BrowserModule,

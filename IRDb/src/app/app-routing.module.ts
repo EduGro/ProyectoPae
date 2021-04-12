@@ -1,8 +1,7 @@
 import { NgModule } from '@angular/core';
-import { Router, RouterModule, Routes } from '@angular/router';
-
-import { ListDetailsComponent } from './components/principal/list-details/list-details.component';
+import { RouterModule, Routes } from '@angular/router';
 import { ListsComponent } from './components/principal/lists/lists.component';
+
 import { LoginComponent } from './components/login/login.component';
 import { MainComponent } from './components/principal/main/main.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
@@ -12,31 +11,16 @@ import { UsersComponent } from './components/principal/users/users.component'
 import { PrincipalComponent } from './components/principal/principal.component';
 
 const routes: Routes = [
-  { path: '', redirectTo: 'login', pathMatch: 'full' },
-  { path: 'principal', redirectTo: 'main', pathMatch: 'full' },
-  {
-    path: '', component: PrincipalComponent,
-    children: [
-      { path: 'users', component: UsersComponent},
-      {
-        path: 'lists', children: [
-          { path: '', component: ListsComponent },
-          { path: ':id', component: ListDetailsComponent }
-        ]
-      },
-      { path: 'principal', component: PrincipalComponent },
-      { path: 'main', component: MainComponent },
-      { path: 'users', component: UsersComponent },
-      { path: 'login', component: LoginComponent },
-    
-      { path: 'register', component: RegistroComponent },
-      { path: 'recipes', component: RecipesComponent },
-      
-      { path: "**", component: NotFoundComponent }
-    ]
-  },
-  { path: "**", component: NotFoundComponent }
-  
+  {path:'', redirectTo: 'login', pathMatch: 'full'},
+  {path:'principal', redirectTo: 'main', pathMatch: 'full'},
+  {path: 'main', component: MainComponent},
+  { path: 'users', component: UsersComponent},
+  { path: 'login', component: LoginComponent },
+  { path: 'principal', component: PrincipalComponent},
+  { path: 'register', component: RegistroComponent },
+  { path: 'recipes', component: RecipesComponent},
+  { path: 'lists', component: ListsComponent},
+  {path: "**", component: NotFoundComponent}
 ];
 
 @NgModule({

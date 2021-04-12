@@ -1,28 +1,3 @@
-<div class="recipes">
-  <h1>{{recipe.name}}</h1>
-  <div class="subtext">
-    Tiempo de preparacion: {{recipe.prep_time}}
-    <span class="ghost">|</span>
-    Tiempo de cocinado: {{recipe.cook_time}}
-    <span class="ghost">|</span>
-    Cocina: {{recipe.cuicine}}
-    <span class="ghost">|</span>
-    Porciones: {{recipe.servings}}
-  </div>
-  <img src="https://i.imgur.com/WjjgwNV.jpeg" height="250px">
-  <div class="ingredients">
-    <h2>Ingredients:</h2>
-    <li *ngFor="let ingredient of recipe.ingredients">
-      {{ingredient}}
-    </li>
-  </div>
-  <div class="steps">
-    <h2>Steps:</h2>
-    <ol>
-      <li *ngFor="let step of recipe.steps">
-        {{step}}
-        <hr>
-      </li>
-    </ol>
-  </div>
-</div>
+<app-principal></app-principal>
+<p>recipes works!</p>
+<h1>This is a recipe page :)</h1>
