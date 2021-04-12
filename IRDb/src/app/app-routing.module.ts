@@ -14,6 +14,8 @@ import { PrincipalComponent } from './components/principal/principal.component';
 const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
   { path: 'principal', redirectTo: 'main', pathMatch: 'full' },
+  { path: 'login', component: LoginComponent },
+  { path: 'register', component: RegistroComponent },
   {
     path: '', component: PrincipalComponent,
     children: [
@@ -27,14 +29,12 @@ const routes: Routes = [
       { path: 'principal', component: PrincipalComponent },
       { path: 'main', component: MainComponent },
       { path: 'users', component: UsersComponent },
-      { path: 'login', component: LoginComponent },
-    
-      { path: 'register', component: RegistroComponent },
       { path: 'recipes', component: RecipesComponent },
       
       { path: "**", component: NotFoundComponent }
     ]
   },
+  
   { path: "**", component: NotFoundComponent }
   
 ];
