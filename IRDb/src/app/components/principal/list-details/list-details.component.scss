@@ -1,6 +1,5 @@
 li {
   font-size: 2em;
-  padding-bottom: 2%;
   list-style-type: none;
 }
 
@@ -15,4 +14,18 @@ hr {
   background-color: #d8753f;
   height: 2px;
   border-width: 0;
+}
+
+img {
+  padding-left: 2%;
+  display: inline-block;
+  vertical-align: auto;
+}
+
+.recipeName {
+  display: inline-block;
+  align-items: center;
+  vertical-align: top;
+  padding-left: 2%;
+
 }

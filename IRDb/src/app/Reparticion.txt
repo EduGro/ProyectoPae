@@ -3,13 +3,13 @@ index - copyright
 main - todo ya que inicia sesión 
 
 //Mariana
-login
-registro
-app - solo search bar
+login //Done
+registro //Done
+app - solo search bar //Done
 
 //Eduardo
 users - perfil
-recipes - individual
-lists - lista de listas
+recipes - individual //Done
+lists - lista de listas //Done
 
 colores: rojo, naranja & amarillo 

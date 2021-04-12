@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-users',
@@ -6,6 +6,13 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./users.component.scss']
 })
 export class UsersComponent implements OnInit {
+
+  @Input() user = {
+    name: 'User',
+    image: 'https://i.imgur.com/XUJi0zC.jpg',
+    email: 'Random@fake.com',
+    creation: '11/04/2021'
+  };
 
   constructor() { }
 
