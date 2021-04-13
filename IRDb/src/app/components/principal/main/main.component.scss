@@ -1,0 +1,47 @@
+body {
+  background-color: #ffc04c;
+  overflow: hidden;
+}
+
+#myCarousel {
+  width: 100%;
+  background-color: rgba(255, 187, 97, 0.993);
+}
+
+#imgC {
+  width: 100%;
+  margin: auto;
+}
+
+.carousel-caption h3,
+p {
+  font-size: 19px;
+  color: rgb(255, 255, 255);
+}
+
+div.list {
+  margin-left: auto;
+  margin-right: 40px;
+  margin-top: 20px;
+  background-color: coral;
+  width: 15vw;
+  height: 18vh;
+  border-radius: 10px;
+  font-size: smaller;
+}
+
+li.items {
+  padding: 2%;
+  font-size: x-large;
+  color: black;
+  list-style: none;
+}
+
+#imgR {
+  padding: 20px;
+  width: 25%;
+}
+
+.grid{
+    margin-left: 5%;
+}

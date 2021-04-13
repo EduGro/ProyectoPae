@@ -47,8 +47,10 @@
     border-color: #ff8100;
 }
 
-.buscar button{
+.buscar button:hover{
     cursor: pointer;
+    background-color: #9f0909;
+    border-color: #9f0909;
 }
 
 .buscar img {
