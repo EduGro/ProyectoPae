@@ -10,6 +10,7 @@ import { RecipesComponent } from './components/principal/recipes/recipes.compone
 import { RegistroComponent } from './components/registro/registro.component';
 import { UsersComponent } from './components/principal/users/users.component'
 import { PrincipalComponent } from './components/principal/principal.component';
+import { AuthGuard } from './common/guards/auth.guard';
 
 const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -17,7 +18,7 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegistroComponent },
   {
-    path: '', component: PrincipalComponent,
+    path: '', component: PrincipalComponent, canActivate:[AuthGuard],
     children: [
       { path: 'users', component: UsersComponent},
       {
