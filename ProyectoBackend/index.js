@@ -37,7 +37,11 @@ app.post('/authgoogle', (req, res) => {
     }).then(response => {
         const data = response.getPayload();
         console.log(data);
-        res.sendStatus(200);
+        var sending = {
+            "token": 123,
+            "Name": data.name
+        };
+        res.send(sending);
     }). catch(e => {
         console.log(e);
         res.status(400).send('bad credentials');
