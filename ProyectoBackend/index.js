@@ -3,13 +3,21 @@ const fs = require('fs');
 const path = require('path');
 const cors = require('cors');
 var bodyParser = require('body-parser');
+var aws = require('aws-sdk'); // ^2.2.41
+var multer = require('multer'); // "multer": "^1.1.0"
+var multerS3 = require('multer-s3'); //"^1.4.1"
 
-const { OAuth2Client } = require('google-auth-library');
-const { Console } = require('console');
+
+const {
+    OAuth2Client
+} = require('google-auth-library');
+const {
+    Console
+} = require('console');
 const app = express();
 app.use(cors());
 
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
     next();
@@ -20,7 +28,27 @@ app.use(bodyParser.urlencoded({
 }));
 app.use(bodyParser.json());
 
-if(process.env.NODE_ENV==='dev'){
+aws.config.update({
+    secretAccessKey: process.env.AWSSecretKey,
+    accessKeyId: process.env.AWSAccessKeyId,
+    region: 'us-east-2'
+});
+
+var s3 = new aws.S3();
+
+var upload = multer({
+    storage: multerS3({
+        s3: s3,
+        bucket: 'pae-proyecto',
+        key: function (req, file, cb) {
+            console.log(file);
+            cb(null, file.originalname); //use Date.now() for unique file keys
+        }
+    })
+});
+
+
+if (process.env.NODE_ENV === 'dev') {
     require('dotenv').config();
 }
 
@@ -42,17 +70,40 @@ app.post('/authgoogle', (req, res) => {
             "Name": data.name
         };
         res.send(sending);
-    }). catch(e => {
+    }).catch(e => {
         console.log(e);
         res.status(400).send('bad credentials');
     })
-    
+
 });
 
 app.get('/authgoogle', (req, res) => {
     res.status(201).send('Ok');
 });
 
-app.get('/', (req, res) => {
-    res.status(200).send();
+app.get('/', function (req, res) {
+    res.sendFile(__dirname + '/index.html');
+});
+//open in browser to see upload form
+app.get('/create', function (req, res) {
+    res.render("createUser");
+});
+
+//app.post('/signup', upload.array('upl',1), function (req, res, next) {
+//    //TODO GUARDAR A MONGO
+//    var sending = {
+//        "token": 123,
+//        "Name": res.name
+//    };
+//    res.send(sending);
+//});
+
+//used by upload form
+app.post('/create', upload.array('upl', 1), function (req, res, next) {
+    console.log(req.body);
+    var sending = {
+        "token": 123,
+        "Name": req.body.name
+    };
+    res.send(sending);
 });

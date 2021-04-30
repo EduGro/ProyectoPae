@@ -1,4 +1,4 @@
-<form [formGroup]="form" (submit)="registrar()">
+<form [formGroup]="form" (submit)="registrar(form)" method="POST" enctype="multipart/form-data">
     <div>
         <label for="nombre">Nombre</label><br>
         <input type="text" name="nombre" formControlName="nombre" [ngStyle]="{'border-color': form.controls.nombre.valid? '#ffff33' : 'darkred'}">
@@ -16,7 +16,10 @@
         <input type="password" name="confirmar" formControlName="confirmar" [ngStyle]="{'border-color': form.controls.confirmar.valid? '#ffff33' : 'darkred'}">
     </div>
     <div>
-        <button appClick="submit-register-user">Registrarse</button>
+        <input type="file" name="upl" formControlName="upl" (change)="handleFileInput($event.target.files)"/>
+    </div>
+    <div>
+        <button appClick="submit-regis ter-user">Registrarse</button>
     </div>
     <a routerLink="/login">Regresar a login</a>
 </form>

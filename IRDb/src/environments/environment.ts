@@ -4,6 +4,8 @@
 
 export const environment = {
   production: false,
+  clientId: '454432013780-7pocergldsoa334juh3o4jb7ihcqaeib.apps.googleusercontent.com',
+  clientSecret: 'SKM8N-ThsrTwc3oYDViP4BlM',
   apiUrl: 'http://localhost:3000/'
 };
 
