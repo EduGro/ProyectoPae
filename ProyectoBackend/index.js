@@ -68,7 +68,7 @@ app.post('/registrogoogle', (req, res) => {
         const data = response.getPayload();
         console.log(data);
         var sending = {
-            "token": 123+data.name.substring(0,2)+data.email.substring(0,2),
+            "token": (Math.floor(Math.random() * 100) + 1)+data.name.substring(0,3)+data.email.substring(0,5),
             "Name": data.name
         };
 
