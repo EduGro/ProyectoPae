@@ -87,6 +87,7 @@ app.post('/registrogoogle', (req, res) => {
         var sending = {
             "token": (Math.floor(Math.random() * 100) + 1) + data.name.substring(0, 3) + data.email.substring(0, 5),
             "name": data.name,
+            "email": data.email
         };
 
         var user = {
