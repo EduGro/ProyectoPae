@@ -5,14 +5,33 @@ const cors = require('cors');
 var bodyParser = require('body-parser');
 const Database = require('./database');
 
-const { OAuth2Client } = require('google-auth-library');
-const { Console } = require('console');
+const {
+    OAuth2Client
+} = require('google-auth-library');
+const {
+    Console
+} = require('console');
+var aws = require('aws-sdk');
+var multer = require('multer');
+var multerS3 = require('multer-s3');
+const request = require('request');
+
+require('dotenv').config({
+    path: '.env'
+})
+
+const {
+    OAuth2Client
+} = require('google-auth-library');
+const {
+    Console
+} = require('console');
 const app = express();
 app.use(cors());
 
 let db = new Database();
 
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
     next();
@@ -23,7 +42,7 @@ app.use(bodyParser.urlencoded({
 }));
 app.use(bodyParser.json());
 
-if(process.env.NODE_ENV==='dev'){
+if (process.env.NODE_ENV === 'dev') {
     require('dotenv').config();
 }
 
@@ -45,11 +64,11 @@ app.post('/authgoogle', (req, res) => {
             "Name": data.name
         };
         res.send(sending);
-    }). catch(e => {
+    }).catch(e => {
         console.log(e);
         res.status(400).send('bad credentials');
     })
-    
+
 });
 
 app.get('/authgoogle', (req, res) => {
@@ -68,7 +87,7 @@ app.post('/registrogoogle', (req, res) => {
         const data = response.getPayload();
         console.log(data);
         var sending = {
-            "token": (Math.floor(Math.random() * 100) + 1)+data.name.substring(0,3)+data.email.substring(0,5),
+            "token": (Math.floor(Math.random() * 100) + 1) + data.name.substring(0, 3) + data.email.substring(0, 5),
             "Name": data.name
         };
 
@@ -76,16 +95,37 @@ app.post('/registrogoogle', (req, res) => {
             "name": data.name,
             "email": data.email
         };
-        
+
         db.useCollection('users');
         db.insertUserGoogle(user);
 
         res.send(sending);
-    }). catch(e => {
+    }).catch(e => {
         console.log(e);
         res.status(400).send('bad credentials');
     })
-    
+});
+
+app.get('/recipes', function (req, res) { //https://www.edamam.com/
+    request(`https://api.edamam.com/search?q=chicken&app_id=${process.env.EDAMAM_ID}&app_key=${process.env.EDAMAM_KEY}`, {
+        json: true
+    }, (err, res, body) => {
+        if (err) {
+            return console.log(err);
+        }
+        console.log(body);
+    });
+    res.sendStatus(200);
+});
+
+//used by upload form
+app.post('/create', upload.array('upl', 1), function (req, res, next) {
+    console.log(req.body);
+    var sending = {
+        "token": 123,
+        "Name": req.body.name
+    };
+    res.send(sending);
 });
 
 app.get('/registrogoogle', (req, res) => {
