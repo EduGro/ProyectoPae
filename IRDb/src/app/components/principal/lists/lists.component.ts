@@ -1,9 +1,13 @@
-import { Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
 
-interface List{
-  name:string;
-  id:number;
+import { HttpClient, HttpParams } from '@angular/common/http';
+import { environment } from './../../../../environments/environment';
+
+interface List {
+  name: string;
+  descripcion: string;
+  id: number;
 }
 
 @Component({
@@ -14,18 +18,34 @@ interface List{
 
 export class ListsComponent implements OnInit {
 
-  @Input() lists:List[] = [{name:"List1",
-    id:1}, {name:"List2",
-    id:2}, {name:"List3",
-    id:3}
-  ];
+  lists: Array<List> = [];
 
-  constructor(private router: Router) { }
+  constructor(private router: Router, private httpClient: HttpClient) { }
 
   ngOnInit(): void {
+    this.getLists().then((r) => {
+      //this.lists.concat(r.);
+      for (let i in r) {
+        let addedList: List = {
+          'name': r[i].nombre,
+          'descripcion': r[i].descripcion,
+          'id': i as unknown as number
+        }
+        this.lists.push(addedList);
+      }
+    });
   }
 
-  selectList(list:List){
-    this.router.navigate(['./lists/:'+list.id]);
+  selectList(list: List) {
+    this.router.navigate(['./lists/:' + list.id]);
+  }
+
+  getLists() {
+    const url = `${environment.apiUrl}getlists/`;
+    return this.httpClient.get(url, {
+      params: {
+        email: localStorage.getItem('email'),
+      }
+    }).toPromise();
   }
 }

@@ -2,6 +2,7 @@
 <ul>
   <li *ngFor="let list of lists">
     <a (click)="selectList(list)">{{list.name}}</a>
+    <p>{{list.descripcion}}</p>
     <hr>
   </li>
 </ul>

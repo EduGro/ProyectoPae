@@ -15,7 +15,8 @@ export class AuthService {
 
   save(data, google?) {
     localStorage.setItem('token', data.token);
-    localStorage.setItem('Name', data.name)
+    localStorage.setItem('name', data.name);
+    localStorage.setItem('email', data.email);
     this.loginStatus.next(true);
     if(google) {
       localStorage.setItem('social', '1');
