@@ -18,4 +18,9 @@ export class SessionService {
     const url = `${environment.apiUrl}authgoogle`;
     return this.httpClient.post(url, { idToken: idToken }).toPromise();
   }
+
+  googleReg(idToken: string): Promise<any> {
+    const url = `${environment.apiUrl}registrogoogle`;
+    return this.httpClient.post(url, { idToken: idToken }).toPromise();
+  }
 }

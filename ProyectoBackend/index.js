@@ -3,11 +3,14 @@ const fs = require('fs');
 const path = require('path');
 const cors = require('cors');
 var bodyParser = require('body-parser');
+const Database = require('./database');
 
 const { OAuth2Client } = require('google-auth-library');
 const { Console } = require('console');
 const app = express();
 app.use(cors());
+
+let db = new Database();
 
 app.use(function(req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
@@ -55,4 +58,36 @@ app.get('/authgoogle', (req, res) => {
 
 app.get('/', (req, res) => {
     res.status(200).send();
+});
+
+app.post('/registrogoogle', (req, res) => {
+    console.log('Datos de google ID token recibidos', req.body.idToken);
+    googleClient.verifyIdToken({
+        idToken: req.body.idToken,
+    }).then(response => {
+        const data = response.getPayload();
+        console.log(data);
+        var sending = {
+            "token": 123+data.name.substring(0,2)+data.email.substring(0,2),
+            "Name": data.name
+        };
+
+        var user = {
+            "name": data.name,
+            "email": data.email
+        };
+        
+        db.useCollection('users');
+        db.insertUserGoogle(user);
+
+        res.send(sending);
+    }). catch(e => {
+        console.log(e);
+        res.status(400).send('bad credentials');
+    })
+    
+});
+
+app.get('/registrogoogle', (req, res) => {
+    res.status(201).send('Ok');
 });
