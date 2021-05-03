@@ -1,5 +1,5 @@
 <div>
-  <button data-toggle="modal" data-target="#myModal">+ Agregar una lista</button>
+  <button class="btn" data-toggle="modal" data-target="#myModal">+ Agregar una lista</button>
 </div>
 <div class="listas">
   <ul>
@@ -35,7 +35,7 @@
         </form>
       </div>
       <div class="modal-footer">
-        <button type="submit" class="btn btn-success" (click)="listAdd()">Agregar</button>
+        <button type="submit" class="btn btn-success" (click)="listAdd()" data-dismiss="modal">Agregar</button>
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
       </div>
     </div>

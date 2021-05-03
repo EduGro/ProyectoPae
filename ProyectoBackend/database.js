@@ -80,6 +80,29 @@ class Database {
         });
     }
 
+    insertToLists(nombre, desc){
+        return db.collection('listas').insertOne({
+            nombre: nombre,
+            descripcion: desc
+        }).then((r) => {
+            console.log("Insertado a lists");
+            return r.insertedId;
+        }).catch(err => {
+            console.log("Falló al insertar", err);
+            return null;
+        });
+    }
+
+    insertToUsuariosListas(idLista, idUser){
+        db.collection('usuarios-lista').insertOne({
+            idUsuario: idUser.toString(),
+            idLista: idLista.toString()
+        }).then((r) => {
+            console.log("Insertado a usuarios-lista");
+        }).catch(err => {
+            console.log("Falló al insertar", err);
+        });
+    }
 }
 
 module.exports = Database;

@@ -167,6 +167,24 @@ app.get('/getlists', (req, res) => {
     });
 });
 
+app.post('/addlist', (req, res) => {
+    var email = req.body.params['email'];
+    var nombre = req.body.body['nombre'];
+    var desc = req.body.body['desc'];
+    db.insertToLists(nombre, desc).then((lista) => {
+        db.searchUsers(email).then((r) => {
+            db.insertToUsuariosListas(lista, r[0]._id);
+            res.status(201);
+        }).catch(e => {
+            console.log(e);
+            res.status(400).send('Bad Request');
+        });
+    }).catch(e => {
+        console.log(e);
+        res.status(404).send('Not Found');
+    });
+});
+
 const io = socketIo(server, {
   cors: {
     origin: 'http://localhost:4200',

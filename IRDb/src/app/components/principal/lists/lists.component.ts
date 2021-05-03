@@ -64,6 +64,17 @@ export class ListsComponent implements OnInit {
   }
 
   listAdd() {
-    console.log(this.form.value.nombre);
+    console.log(this.form.value);
+    const url = `${environment.apiUrl}addlist/`;
+    this.httpClient.post(url, {
+      params: {
+        email: localStorage.getItem('email')
+      },
+      body: {
+        nombre: this.form.value.nombre,
+        desc: this.form.value.descripcion
+      }
+    }).toPromise();
+    window.location.reload();
   }
 }
