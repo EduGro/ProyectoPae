@@ -5,6 +5,7 @@ const cors = require('cors');
 var bodyParser = require('body-parser');
 const Database = require('./database');
 const socketIo = require('socket.io');
+const fetch = require("node-fetch");
 
 const {
     OAuth2Client
@@ -19,7 +20,7 @@ const request = require('request');
 
 require('dotenv').config({
     path: '.env'
-})
+});
 
 const { connect } = require('http2');
 
@@ -105,16 +106,22 @@ app.post('/registrogoogle', (req, res) => {
     })
 });
 
-app.get('/recipes', function (req, res) { //https://www.edamam.com/
-    request(`https://api.edamam.com/search?q=chicken&app_id=${process.env.EDAMAM_ID}&app_key=${process.env.EDAMAM_KEY}`, {
-        json: true
-    }, (err, res, body) => {
-        if (err) {
-            return console.log(err);
-        }
-        console.log(body);
+app.get('/recipesRandom', async function (req, res) { 
+    var url = `https://api.spoonacular.com/recipes/random?apiKey=${process.env.SPOON_KEY}&number=6`;
+    fetch(url)
+        .then(response => response.json())
+        .then(result => {
+            res.status(200).send(result)
     });
-    res.sendStatus(200);
+});
+
+app.get('/recipesRandom', async function (req, res) { 
+    var url = `https://api.spoonacular.com/recipes/random?apiKey=${process.env.SPOON_KEY}&number=6`;
+    fetch(url)
+        .then(response => response.json())
+        .then(result => {
+            res.status(200).send(result)
+    });
 });
 
 //used by upload form
@@ -126,6 +133,15 @@ app.get('/recipes', function (req, res) { //https://www.edamam.com/
     };
     res.send(sending);
 });*/
+app.get('/recipesInfo', async function (req, res) { 
+    var id = req.body.id;
+    var url = `https://api.spoonacular.com/recipes/${id}/information?apiKey=${process.env.SPOON_KEY}`;
+    fetch(url)
+        .then(response => response.json())
+        .then(result => {
+            res.status(200).send(result)
+    });
+});
 
 app.get('/registrogoogle', (req, res) => {
     res.status(201).send('Ok');

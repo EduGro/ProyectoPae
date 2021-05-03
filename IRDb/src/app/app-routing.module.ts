@@ -30,7 +30,9 @@ const routes: Routes = [
       { path: 'principal', component: PrincipalComponent },
       { path: 'main', component: MainComponent },
       { path: 'users', component: UsersComponent },
-      { path: 'recipes', component: RecipesComponent },
+      { path: 'recipes', children: [
+        {path: ':id', component: RecipesComponent}
+      ] },
       
       { path: "**", component: NotFoundComponent }
     ]

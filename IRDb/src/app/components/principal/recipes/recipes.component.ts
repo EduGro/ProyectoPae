@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-recipes',
@@ -30,10 +31,16 @@ export class RecipesComponent implements OnInit {
       "To unmold, run a knife around edges and invert onto a large rimmed serving platter. Cut into wedges or spoon onto dessert plates; spoon sauce over each serving."
     ]
   }
+  public id: string;
 
-  constructor() { }
+  constructor(private activatedRoute: ActivatedRoute) {
+  }
 
   ngOnInit(): void {
+    this.activatedRoute.params.subscribe(paramsId => {
+      this.id = paramsId.id;
+      console.log(this.id);
+  });
   }
 
 }
