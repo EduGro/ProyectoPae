@@ -55,7 +55,8 @@ class Database {
         const collection = db.collection(this.collectionName);
         collection.insertOne({
             nombre: user.name,
-            correo: user.email
+            correo: user.email,
+            imagen: user.image
         }).then((r) => {
             console.log("Insertado");
         }).catch(err => {

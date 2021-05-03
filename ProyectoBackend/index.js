@@ -84,7 +84,7 @@ app.post('/registrogoogle', (req, res) => {
         idToken: req.body.idToken,
     }).then(response => {
         const data = response.getPayload();
-        console.log(data);
+        
         var sending = {
             "token": (Math.floor(Math.random() * 100) + 1) + data.name.substring(0, 3) + data.email.substring(0, 5),
             "name": data.name,
@@ -93,7 +93,8 @@ app.post('/registrogoogle', (req, res) => {
 
         var user = {
             "name": data.name,
-            "email": data.email
+            "email": data.email,
+            "image": data.picture
         };
 
         db.useCollection('users');
