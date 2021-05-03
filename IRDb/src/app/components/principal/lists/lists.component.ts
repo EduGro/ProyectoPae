@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { environment } from './../../../../environments/environment';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 interface List {
   name: string;
@@ -20,11 +21,12 @@ export class ListsComponent implements OnInit {
 
   lists: Array<List> = [];
 
-  constructor(private router: Router, private httpClient: HttpClient) { }
+  form!: FormGroup;
+
+  constructor(private router: Router, private httpClient: HttpClient, private formBuilder: FormBuilder) { }
 
   ngOnInit(): void {
     this.getLists().then((r) => {
-      //this.lists.concat(r.);
       for (let i in r) {
         let addedList: List = {
           'name': r[i].nombre,
@@ -32,6 +34,18 @@ export class ListsComponent implements OnInit {
           'id': i as unknown as number
         }
         this.lists.push(addedList);
+      }
+    });
+
+    this.form = this.formBuilder.group({
+      nombre: ['', Validators.required],
+      descripcion: ['', Validators.required]
+    }, {
+      validators: () => {
+        if (!this.form) return;
+        return {
+          confirmPass: true
+        }
       }
     });
   }
@@ -47,5 +61,9 @@ export class ListsComponent implements OnInit {
         email: localStorage.getItem('email'),
       }
     }).toPromise();
+  }
+
+  listAdd() {
+    console.log(this.form.value.nombre);
   }
 }

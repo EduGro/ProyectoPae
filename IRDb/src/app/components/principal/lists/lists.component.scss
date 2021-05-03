@@ -5,18 +5,37 @@ li {
 }
 
 ul {
-  padding-top: 2%;
+  padding-top: 5%;
   padding-left: 5%;
   padding-right: 5%;
 }
 
 hr {
-  color: #d8753f;
-  background-color: #d8753f;
+  background-color: #ef0000;
   height: 2px;
-  border-width: 0;
+  border-width: 10;
 }
 
 p {
   font-size: 50%;
+}
+
+button {
+  float: right;
+  border-color: #ff8100;
+  background-color: #ff8100;
+  font-size: large;
+  line-height: 30px;
+  margin-bottom: 15%;
+  margin-top: 2%;
+  margin-right: 5%;
+}
+
+a {
+  font-weight: bold;
+}
+
+a:hover{
+  cursor: pointer;
+  font-style: italic;
 }
