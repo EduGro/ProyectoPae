@@ -103,6 +103,20 @@ class Database {
             console.log("Falló al insertar", err);
         });
     }
+
+    
+    insertUser(name, email, password){
+        db.collection('users').insertOne({
+        nombre: name,
+        correo: email,
+        password: password
+    }).then((r) => {
+        console.log("Insertado");
+    }).catch(err => {
+        console.log("No se inserto", err);
+    });
+}
+
 }
 
 module.exports = Database;

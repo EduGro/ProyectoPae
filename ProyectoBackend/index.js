@@ -194,6 +194,17 @@ const io = socketIo(server, {
   }
 });
 
+app.post('/usermongo',(req,res)=>{
+    console.log("ewe")
+    var nombre = req.body['nombre'];
+    var correo = req.body['correo'];
+    var password = req.body['password'];
+    db.insertUser(nombre, correo, password);
+}).catch(e => {
+    console.log(e);
+    res.status(400).send('Bad Request');
+});
+
 io.on('connection', socket => {
 
   const authToken = socket.handshake.headers['authorization'];
