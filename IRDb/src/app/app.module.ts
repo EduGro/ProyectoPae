@@ -19,7 +19,6 @@ import { ListDetailsComponent } from './components/principal/list-details/list-d
 
 import { environment} from './../environments/environment';
 
-
 @NgModule({
   declarations: [
     AppComponent,

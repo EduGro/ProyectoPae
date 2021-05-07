@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { AuthService } from 'src/app/common/services/auth.service';
 
 @Component({
   selector: 'app-users',
@@ -14,9 +15,14 @@ export class UsersComponent implements OnInit {
     creation: '11/04/2021'
   };
 
-  constructor() { }
+  @Input() loggedIn: boolean;
+
+  constructor(private authService: AuthService) { }
 
   ngOnInit(): void {
+    this.authService.loginStatus.subscribe(flag => {
+      console.log('Login status', flag);
+      this.loggedIn = flag;
+    });
   }
-
 }

@@ -32,18 +32,23 @@ export class AuthService {
   }
 
   clear() {
-    return new Promise((resolve, reject) => {
+    return new Promise<void>((resolve, reject) => {
       const isSocial = this.isSocialUser();
       localStorage.clear();
       if(isSocial){
         this.socialAuthService.signOut(true).then((response) => {
           this.loginStatus.next(false);
-          reject();
+          resolve();
         });
       } else {
         this.loginStatus.next(false);
-        reject();
+        resolve();
       }
     });
+  }
+
+  logout() {
+    this.clear()
+    return new Promise<void>((resolve, reject) => { resolve(); });
   }
 }

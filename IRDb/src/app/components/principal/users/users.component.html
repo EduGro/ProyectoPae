@@ -1,5 +1,6 @@
+<h2 *ngIf="!loggedIn">No hay una sesión iniciada, no hay usuarios para mostrar</h2>
 
-<section class="profile">
+<section class="profile" *ngIf="loggedIn">
     <header class="header">
       <div class="details">
         <img src="{{user.image}}" alt="John Doe" class="profile-pic">

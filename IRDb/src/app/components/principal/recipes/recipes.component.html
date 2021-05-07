@@ -1,4 +1,6 @@
-<div class="recipes">
+<h2 *ngIf="!loggedIn">No hay una sesión iniciada, no se pueden mostrar recetas</h2>
+
+<div class="recipes" *ngIf="loggedIn">
   <h1>{{recipe.name}}</h1>
   <div class="subtext">
     Tiempo de preparacion: {{recipe.prep_time}}

@@ -1,8 +1,10 @@
-<div>
+<h2 *ngIf="!loggedIn">No hay una sesión iniciada, no hay listas para mostrar</h2>
+
+<div *ngIf="loggedIn">
   <button class="btn" data-toggle="modal" data-target="#myModal">+ Agregar una lista</button>
 </div>
 <div class="listas">
-  <ul>
+  <ul *ngIf="loggedIn">
     <li *ngFor="let list of lists">
       <a (click)="selectList(list)">{{list.name}}</a>
       <p>{{list.descripcion}}</p>

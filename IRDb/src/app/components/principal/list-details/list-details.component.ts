@@ -20,6 +20,7 @@ export class ListDetailsComponent implements OnInit {
     id:3}
   ];
 
+  @Input() loggedIn: boolean;
 
   constructor(private router: Router) { }
 

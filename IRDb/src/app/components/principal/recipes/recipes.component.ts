@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { AuthService } from 'src/app/common/services/auth.service';
 
 @Component({
   selector: 'app-recipes',
@@ -7,6 +8,8 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./recipes.component.scss']
 })
 export class RecipesComponent implements OnInit {
+
+  @Input() loggedIn: boolean;
 
   @Input() recipe = {
     name: 'Flan',
@@ -33,14 +36,19 @@ export class RecipesComponent implements OnInit {
   }
   public id: string;
 
-  constructor(private activatedRoute: ActivatedRoute) {
+  constructor(private activatedRoute: ActivatedRoute, private authService: AuthService) {
   }
 
   ngOnInit(): void {
     this.activatedRoute.params.subscribe(paramsId => {
       this.id = paramsId.id;
       console.log(this.id);
-  });
+    });
+
+    this.authService.loginStatus.subscribe(flag => {
+      console.log('Login status', flag);
+      this.loggedIn = flag;
+    });
   }
 
 }

@@ -193,7 +193,7 @@ const io = socketIo(server, {
     credentials: true
   }
 });
-
+/*
 app.post('/usermongo',(req,res)=>{
     console.log("ewe")
     var nombre = req.body['nombre'];
@@ -203,7 +203,7 @@ app.post('/usermongo',(req,res)=>{
 }).catch(e => {
     console.log(e);
     res.status(400).send('Bad Request');
-});
+});*/
 
 io.on('connection', socket => {
 

@@ -1,5 +1,6 @@
+<h2 *ngIf="!loggedIn">No hay una sesión iniciada, no hay detalles para mostrar</h2>
 
-<ul>
+<ul *ngIf="loggedIn">
   <li *ngFor="let recipe of recipes">
     <a (click)="selectRecipe(recipe)">
       <img src="{{recipe.image}}" width="75" height="75">

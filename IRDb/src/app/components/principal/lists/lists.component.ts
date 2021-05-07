@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { environment } from './../../../../environments/environment';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AuthService } from 'src/app/common/services/auth.service';
 
 interface List {
   name: string;
@@ -23,19 +24,23 @@ export class ListsComponent implements OnInit {
 
   form!: FormGroup;
 
-  constructor(private router: Router, private httpClient: HttpClient, private formBuilder: FormBuilder) { }
+  @Input() loggedIn: boolean;
+
+  constructor(private router: Router, private authService: AuthService, private httpClient: HttpClient, private formBuilder: FormBuilder) { }
 
   ngOnInit(): void {
-    this.getLists().then((r) => {
-      for (let i in r) {
-        let addedList: List = {
-          'name': r[i].nombre,
-          'descripcion': r[i].descripcion,
-          'id': i as unknown as number
+    if (this.loggedIn){
+      this.getLists().then((r) => {
+        for (let i in r) {
+          let addedList: List = {
+            'name': r[i].nombre,
+            'descripcion': r[i].descripcion,
+            'id': i as unknown as number
+          }
+          this.lists.push(addedList);
         }
-        this.lists.push(addedList);
-      }
-    });
+      });
+    }
 
     this.form = this.formBuilder.group({
       nombre: ['', Validators.required],
@@ -47,6 +52,11 @@ export class ListsComponent implements OnInit {
           confirmPass: true
         }
       }
+    });
+
+    this.authService.loginStatus.subscribe(flag => {
+      console.log('Login status', flag);
+      this.loggedIn = flag;
     });
   }
 
