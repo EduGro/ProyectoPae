@@ -17,6 +17,27 @@
           <a routerLink="/login" *ngIf="!loggedIn">Iniciar sesión</a>
         </div>
       </li>
+      <li>
+        <div class="text">
+          Cuisine
+        </div>
+      </li>
+      <li>
+        <ng-multiselect-dropdown [placeholder]="'Cuisine no seleccionada'" [settings]="dropdownSettingsC"
+          [data]="dropdownListC" [(ngModel)]="selectedItemsC" (onSelect)="onItemSelect($event)"
+          (onSelectAll)="onSelectAll($event)">
+        </ng-multiselect-dropdown>
+      </li>
+      <li>
+        <div class="text">
+          Alergias
+        </div>
+      </li>
+      <li>
+        <ng-multiselect-dropdown [placeholder]="'Sin alergias'" [settings]="dropdownSettingsI" [data]="dropdownListI"
+          [(ngModel)]="selectedItemsI" (onSelect)="onItemSelect($event)" (onSelectAll)="onSelectAll($event)">
+        </ng-multiselect-dropdown>
+      </li>
     </ul>
   </nav>
 </div>

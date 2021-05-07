@@ -22,6 +22,9 @@ require('dotenv').config({
     path: '.env'
 });
 
+// create application/json parser
+var jsonParser = bodyParser.json();
+
 const { connect } = require('http2');
 
 const app = express();
@@ -125,6 +128,8 @@ app.get('/recipesRandom', async function (req, res) {
     });
 });
 
+//https://spoonacular.com/food-api/docs
+
 //used by upload form
 /*app.post('/create', upload.array('upl', 1), function (req, res, next) {
     console.log(req.body);
@@ -142,6 +147,28 @@ app.get('/recipesInfo', async function (req, res) {
         .then(result => {
             res.status(200).send(result)
     });
+});
+
+app.get('/recipesSearch' ,async function (req, res) { 
+    var query = req.body.query;
+    console.log(req.body);
+    var cuisine = req.body.cuisine;
+    var intolerances = req.body.intolerances;
+    var url = `https://api.spoonacular.com/recipes/complexSearch?query=${query}&apiKey=${process.env.SPOON_KEY}&number=5`;
+    console.log(cuisine);
+    if(cuisine != null){
+        url += `&cuisine=${cuisine}`;
+    }
+    if(intolerances != null){
+        url += `&intolerances=${intolerances}`;
+    }
+    console.log(url);
+    /*fetch(url)
+        .then(response => response.json())
+        .then(result => {
+            res.status(200).send(result)
+    });*/
+    res.status(200).send("RESPUESTA!!!!");
 });
 
 app.get('/registrogoogle', (req, res) => {

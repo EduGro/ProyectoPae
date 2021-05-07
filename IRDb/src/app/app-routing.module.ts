@@ -11,6 +11,7 @@ import { RegistroComponent } from './components/registro/registro.component';
 import { UsersComponent } from './components/principal/users/users.component'
 import { PrincipalComponent } from './components/principal/principal.component';
 import { AuthGuard } from './common/guards/auth.guard';
+import { SearchComponent } from './components/principal/search/search.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -33,6 +34,7 @@ const routes: Routes = [
       { path: 'recipes', children: [
         {path: ':id', component: RecipesComponent}
       ] },
+      {path: 'search', component: SearchComponent},
       
       { path: "**", component: NotFoundComponent }
     ]
