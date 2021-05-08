@@ -187,6 +187,7 @@ app.get('/getlists', (req, res) => {
             }
             lists.push(lista);
         }
+        console.log(listas);
         res.status(200).send(lists);
     }).catch(e => {
         console.log(e);

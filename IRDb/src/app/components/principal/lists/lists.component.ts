@@ -29,7 +29,12 @@ export class ListsComponent implements OnInit {
   constructor(private router: Router, private authService: AuthService, private httpClient: HttpClient, private formBuilder: FormBuilder) { }
 
   ngOnInit(): void {
-    if (this.loggedIn){
+    this.authService.loginStatus.subscribe(flag => {
+      console.log('Login status', flag);
+      this.loggedIn = flag;
+    });
+
+    if (this.loggedIn) {
       this.getLists().then((r) => {
         for (let i in r) {
           let addedList: List = {
@@ -39,6 +44,7 @@ export class ListsComponent implements OnInit {
           }
           this.lists.push(addedList);
         }
+        console.log(this.lists);
       });
     }
 
@@ -52,11 +58,6 @@ export class ListsComponent implements OnInit {
           confirmPass: true
         }
       }
-    });
-
-    this.authService.loginStatus.subscribe(flag => {
-      console.log('Login status', flag);
-      this.loggedIn = flag;
     });
   }
 

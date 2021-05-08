@@ -40,14 +40,14 @@ export class RecipesComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.activatedRoute.params.subscribe(paramsId => {
-      this.id = paramsId.id;
-      console.log(this.id);
-    });
-
     this.authService.loginStatus.subscribe(flag => {
       console.log('Login status', flag);
       this.loggedIn = flag;
+    });
+    
+    this.activatedRoute.params.subscribe(paramsId => {
+      this.id = paramsId.id;
+      console.log(this.id);
     });
   }
 

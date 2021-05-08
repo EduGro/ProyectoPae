@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { AuthService } from 'src/app/common/services/auth.service';
 
 interface Recipes{
   image: string;
@@ -22,9 +23,13 @@ export class ListDetailsComponent implements OnInit {
 
   @Input() loggedIn: boolean;
 
-  constructor(private router: Router) { }
+  constructor(private router: Router, private authService: AuthService) { }
 
   ngOnInit(): void {
+    this.authService.loginStatus.subscribe(flag => {
+      console.log('Login status', flag);
+      this.loggedIn = flag;
+    });
   }
 
   selectRecipe(recipe:Recipes){
