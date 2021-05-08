@@ -1,7 +1,7 @@
 <h2 *ngIf="!loggedIn">No hay una sesión iniciada, no hay listas para mostrar</h2>
 
 <div *ngIf="loggedIn">
-  <button class="btn" data-toggle="modal" data-target="#myModal">+ Agregar una lista</button>
+  <button class="btn" data-toggle="modal" data-target="#myModal" *ngIf="router.url === '/lists'">+ Agregar una lista</button>
 </div>
 <div class="listas">
   <ul *ngIf="loggedIn">

@@ -9,11 +9,18 @@ export class SessionService {
   /*signup(data: any): Promise<any>{
     const url = `${environment.apiUrl}signup`;
     return this.httpClient.post(url, data), data.toPromise();
-  }
-  login(credentials: any): Promise<any> {
-    const url = `${environment.apiUrl}auth`;
-    return this.httpClient.post(url, credentials), credentials.toPromise();
   }*/
+
+  login(correo: string, pass: string): Promise<any> {
+    const url = `${environment.apiUrl}auth`;
+    return this.httpClient.get(url, {
+      params: {
+        correo: correo,
+        pass: pass
+      }
+    }).toPromise();
+  }
+
   googleLogin(idToken: string): Promise<any>{
     const url = `${environment.apiUrl}authgoogle`;
     return this.httpClient.post(url, { idToken: idToken }).toPromise();

@@ -49,7 +49,7 @@ if (process.env.NODE_ENV === 'dev') {
 
 const googleClient = new OAuth2Client(process.env.GOOGLE_CLIENT_ID, process.env.GOOGLE_CLIENT_SECRET);
 
-const server = app.listen(3000, () => {
+app.listen(3000, () => {
     console.log('app is running in port 3000')
 });
 
@@ -97,7 +97,8 @@ app.post('/registrogoogle', (req, res) => {
         var user = {
             "name": data.name,
             "email": data.email,
-            "image": data.picture
+            "image": data.picture,
+            "password": null
         };
 
         db.useCollection('users');
@@ -177,7 +178,6 @@ app.get('/registrogoogle', (req, res) => {
 
 app.get('/getlists', (req, res) => {
     var email = req.query['email'];
-    //db.useCollection('users');
     db.searchUsersListas(email).then((listas) => {
         var lists = new Array();
         for (let i in listas) {
@@ -187,7 +187,7 @@ app.get('/getlists', (req, res) => {
             }
             lists.push(lista);
         }
-        res.status(201).send(lists);
+        res.status(200).send(lists);
     }).catch(e => {
         console.log(e);
         res.status(404).send('Not Found');
@@ -212,14 +212,53 @@ app.post('/addlist', (req, res) => {
     });
 });
 
-const io = socketIo(server, {
+app.get('/getuser', (req, res) => {
+    var email = req.query['email'];
+    db.searchUsers(email).then((u) => {
+        var user = {
+            "name": u[0].nombre,
+            "image": u[0].imagen,
+            "email": u[0].correo
+        }
+        res.status(200).send(user);
+    }).catch(e => {
+        console.log(e);
+        res.status(404).send('Not Found');
+    });
+});
+
+app.get('/auth', (req, res) => {
+    var email = req.query['correo'];
+    db.searchUsers(email).then((u) => {
+        if (u.length != 0) {
+            let pass;
+            if (!u[0].password) {
+                pass = null;
+            } else {
+                if (u[0].password == req.query['pass']) {
+                    pass = true;
+                } else {
+                    pass = false;
+                }
+            }
+            res.status(200).send(pass);
+        } else {
+            res.status(403).send('No se ha registrado');
+        }
+    }).catch(e => {
+        console.log(e);
+        res.status(403).send('Not Found');
+    });
+});
+
+/*const io = socketIo(server, {
   cors: {
     origin: 'http://localhost:4200',
     methods: ['GET', 'POST'],
     allowHeaders: ['Authorization'],
     credentials: true
   }
-});
+});*/
 /*
 app.post('/usermongo',(req,res)=>{
     console.log("ewe")
@@ -232,7 +271,7 @@ app.post('/usermongo',(req,res)=>{
     res.status(400).send('Bad Request');
 });*/
 
-io.on('connection', socket => {
+/*io.on('connection', socket => {
 
   const authToken = socket.handshake.headers['authorization'];
 
@@ -246,4 +285,4 @@ io.on('connection', socket => {
     // io.to('admins').emit('userLikedNews', data);
     socket.broadcast.emit('userLikedNews', data);
   })
-})
+})*/

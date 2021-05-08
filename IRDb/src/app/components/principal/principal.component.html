@@ -1,44 +1,42 @@
-<div class="searchbar">
-  <nav>
-    <ul>
-      <li>
-        <a routerLink="/principal"><img src="../../../assets/iRDb.png" width="13%"></a>
-      </li>
-      <li>
-        <div class="buscar">
-          <input type="text" placeholder="Buscar recetas..." name="search">
-          <button type="submit"><img src="../../../assets/search.png"></button>
-        </div>
-      </li>
-      <li>
-        <div class="enlaces">
-          <a routerLink="/lists" *ngIf="loggedIn">Listas</a>
-          <a (click)="logout()" *ngIf="loggedIn">Cerrar sesión</a>
-          <a routerLink="/login" *ngIf="!loggedIn">Iniciar sesión</a>
-        </div>
-      </li>
-      <li>
-        <div class="text">
-          Cuisine
-        </div>
-      </li>
-      <li>
-        <ng-multiselect-dropdown [placeholder]="'Cuisine no seleccionada'" [settings]="dropdownSettingsC"
-          [data]="dropdownListC" [(ngModel)]="selectedItemsC" (onSelect)="onItemSelect($event)"
-          (onSelectAll)="onSelectAll($event)">
-        </ng-multiselect-dropdown>
-      </li>
-      <li>
-        <div class="text">
-          Alergias
-        </div>
-      </li>
-      <li>
-        <ng-multiselect-dropdown [placeholder]="'Sin alergias'" [settings]="dropdownSettingsI" [data]="dropdownListI"
-          [(ngModel)]="selectedItemsI" (onSelect)="onItemSelect($event)" (onSelectAll)="onSelectAll($event)">
-        </ng-multiselect-dropdown>
-      </li>
-    </ul>
-  </nav>
-</div>
+<nav>
+  <ul>
+    <li>
+      <img src="../../../assets/iRDb.png" *ngIf="!loggedIn" style="width: 13%;">
+      <img src="../../../assets/iRDb.png" *ngIf="loggedIn">
+    </li>
+    <li *ngIf="loggedIn">
+      <input type="search" type="text" placeholder="Buscar recetas..." name="search">
+    </li>
+    <li *ngIf="loggedIn">
+      <button type="submit"><img src="../../../assets/search.png"></button>
+    </li>
+    <li *ngIf="loggedIn">
+      Cuisine
+    </li>
+    <li *ngIf="loggedIn">
+      <ng-multiselect-dropdown [placeholder]="'Cuisine no seleccionada'" [settings]="dropdownSettingsC"
+        [data]="dropdownListC" [(ngModel)]="selectedItemsC" (onSelect)="onItemSelect($event)"
+        (onSelectAll)="onSelectAll($event)">
+      </ng-multiselect-dropdown>
+    </li>
+    <li *ngIf="loggedIn">
+      Alergias
+    </li>
+    <li *ngIf="loggedIn">
+      <ng-multiselect-dropdown [placeholder]="'Sin alergias'" [settings]="dropdownSettingsI" [data]="dropdownListI"
+        [(ngModel)]="selectedItemsI" (onSelect)="onItemSelect($event)" (onSelectAll)="onSelectAll($event)">
+      </ng-multiselect-dropdown>
+    </li>
+    <li>
+      <a class="btn" routerLink="/lists" *ngIf="loggedIn">Mis listas</a>
+    </li>
+    <li>
+      <a class="btn" (click)="logout()" *ngIf="loggedIn">Cerrar sesión</a>
+    </li>
+    <li>
+      <a class="btn" routerLink="/login" *ngIf="!loggedIn">Iniciar sesión</a>
+    </li>
+  </ul>
+</nav>
+
 <router-outlet></router-outlet>

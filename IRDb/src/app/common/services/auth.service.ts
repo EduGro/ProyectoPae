@@ -19,7 +19,7 @@ export class AuthService {
     localStorage.setItem('email', data.email);
     this.loginStatus.next(true);
     if(google) {
-      localStorage.setItem('social', '1');
+      localStorage.setItem('social', google);
     }
   }
 

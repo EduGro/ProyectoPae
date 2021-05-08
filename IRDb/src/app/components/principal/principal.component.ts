@@ -98,7 +98,6 @@ export class PrincipalComponent implements OnInit {
       } else {
         this.authService.logout().then(() => { this.router.navigate(['/principal']) });
       }
-      
     });
   }
   
