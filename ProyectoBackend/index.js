@@ -133,7 +133,6 @@ app.get('/recipesRandom', async function (req, res) {
                     id: recipes[i]["id"],
                     image: recipes[i]["image"]
                 };
-                console.log(iRecipe);
                 recipe.push(iRecipe);
             }
             res.status(200).send(recipe);
@@ -162,7 +161,6 @@ app.post('/recipesInfo', async function (req, res) {
         .then(result => {
             if (result == "" || result == null)
                 res.status(404).send("Recipe id not found");
-            console.log(result);
             var ingredient = [];
             var ingredients = result["extendedIngredients"];
             var i;

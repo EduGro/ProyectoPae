@@ -1,0 +1,59 @@
+li {
+  font-size: 2em;
+  list-style-type: none;
+}
+
+ul {
+  padding-top: 2%;
+  padding-left: 5%;
+  padding-right: 5%;
+}
+
+hr {
+  color: #d8753f;
+  background-color: #d8753f;
+  height: 2px;
+  border-width: 0;
+}
+
+img {
+  padding-left: 2%;
+  display: inline-block;
+  vertical-align: auto;
+}
+
+.recipeName {
+  display: inline-block;
+  align-items: center;
+  vertical-align: top;
+  padding-left: 2%;
+
+}
+
+h2 {
+  margin-top: 5%;
+  margin-left: 5%;
+}
+
+.container {
+  height: 200px;
+  position: relative;
+  border: 3px solid green;
+}
+
+.center {
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+}
+
+h1 {
+  text-align: center;
+}
+
+a{
+  color: black;
+}

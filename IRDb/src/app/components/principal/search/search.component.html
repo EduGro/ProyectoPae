@@ -1,1 +1,20 @@
-<p>search works!</p>
+<h2 *ngIf="!loggedIn">No hay una sesión iniciada, no hay detalles para mostrar</h2>
+
+<div *ngIf="ban">
+  <ul *ngIf="loggedIn">
+    <li *ngFor="let recipe of recipes">
+      <a href="http://localhost:4200/recipes/{{recipe.id}}">
+        <img src="{{recipe.image}}" width="75" height="75">
+        <div class='recipeName'>
+          {{recipe.title}}
+        </div>
+      </a>
+      <hr>
+    </li>
+  </ul>
+</div>
+
+<div class="center" *ngIf="!ban">
+  <img src="../../../../assets/404.png" alt="Smh the image couldn't be found either">
+  <h1>Resultados no encontrados, favor de intentar con otros parametros</h1>
+</div>

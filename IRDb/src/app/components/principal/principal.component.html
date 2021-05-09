@@ -5,18 +5,17 @@
       <img src="../../../assets/iRDb.png" *ngIf="!loggedIn" style="width:13%; border-radius: 15%;">
     </li>
     <li *ngIf="loggedIn">
-      <input type="search" type="text" placeholder="Buscar recetas..." name="search">
+      <input type="search" type="text" placeholder="Buscar recetas..." name="search" [(ngModel)]="searching">
     </li>
     <li *ngIf="loggedIn">
-      <button type="submit"><img src="../../../assets/search.png"></button>
+      <button (click)="search()"><img src="../../../assets/search.png"></button>
     </li>
     <li *ngIf="loggedIn">
       Cuisine
     </li>
     <li *ngIf="loggedIn">
       <ng-multiselect-dropdown [placeholder]="'Cuisine no seleccionada'" [settings]="dropdownSettingsC"
-        [data]="dropdownListC" [(ngModel)]="selectedItemsC" (onSelect)="onItemSelect($event)"
-        (onSelectAll)="onSelectAll($event)">
+        [data]="dropdownListC" [(ngModel)]="selectedItemsC">
       </ng-multiselect-dropdown>
     </li>
     <li *ngIf="loggedIn">
@@ -24,7 +23,7 @@
     </li>
     <li *ngIf="loggedIn">
       <ng-multiselect-dropdown [placeholder]="'Sin alergias'" [settings]="dropdownSettingsI" [data]="dropdownListI"
-        [(ngModel)]="selectedItemsI" (onSelect)="onItemSelect($event)" (onSelectAll)="onSelectAll($event)">
+        [(ngModel)]="selectedItemsI">
       </ng-multiselect-dropdown>
     </li>
     <li>

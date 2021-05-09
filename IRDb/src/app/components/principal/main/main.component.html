@@ -19,33 +19,30 @@
     <div class="carousel-inner">
       <div class="carousel-item active">
         <a href="http://localhost:4200/recipes/{{recipes[0].id}}">
-        <img class="img-responsive center-block" id="imgC" src="{{recipes[0].image}}"
-          style="width: 30%" />
-        <div class="carousel-caption">
-          <h3>{{recipes[0].name}}</h3>
-        </div>
-      </a>
+          <img class="img-responsive center-block" id="imgC" src="{{recipes[0].image}}" style="width: 30%" />
+          <div class="carousel-caption">
+            <h3>{{recipes[0].name}}</h3>
+          </div>
+        </a>
       </div>
 
       <div class="carousel-item">
         <a href="http://localhost:4200/recipes/{{recipes[1].id}}">
-          <img class="img-responsive center-block" id="imgC" src="{{recipes[1].image}}"
-            style="width: 30%" />
+          <img class="img-responsive center-block" id="imgC" src="{{recipes[1].image}}" style="width: 30%" />
           <div class="carousel-caption">
             <h3>{{recipes[1].name}}</h3>
-        </div>
-      </a>
+          </div>
+        </a>
       </div>
 
       <div class="carousel-item">
         <a href="http://localhost:4200/recipes/{{recipes[2].id}}">
-          <img class="img-responsive center-block" id="imgC" src="{{recipes[2].image}}"
-            style="width: 30%" />
+          <img class="img-responsive center-block" id="imgC" src="{{recipes[2].image}}" style="width: 30%" />
           <div class="carousel-caption">
             <h3>{{recipes[2].name}}</h3>
 
-        </div>
-      </a>
+          </div>
+        </a>
       </div>
     </div>
 
@@ -61,22 +58,16 @@
   </div>
   <br>
 
-  <div class="grid">
-    <h2>Recetas Recientes</h2>
-    <div class="row">
-      <img id="imgR" src="{{recipes[4].image}}">
-      <img id="imgR"
-        src="https://www.washingtonpost.com/wp-apps/imrs.php?src=https://arc-anglerfish-washpost-prod-washpost.s3.amazonaws.com/public/2KL6JYQYH4I6REYMIWBYVUGXPI.jpg&w=1200">
-      <img id="imgR" src="https://daiyafoods.com/wp-content/themes/daiya2016/assets/videos/header-mac.jpg">
-      <div class="list">
-        <ul>
-          <li class="items">Mis Listas</li>
-          <li class="items">Mis Recetas</li>
-          <li class="items">Favoritas</li>
-        </ul>
-      </div>
-    </div>
-  </div>
+    <h2>Recetas Recomendadas</h2>
+      <a href="http://localhost:4200/recipes/{{recipes[3].id}}">
+        <img id="imgR" src="{{recipes[3].image}}">
+      </a>
+      <a href="http://localhost:4200/recipes/{{recipes[4].id}}">
+        <img id="imgR" src="{{recipes[4].image}}">
+      </a>
+      <a href="http://localhost:4200/recipes/{{recipes[5].id}}">
+        <img id="imgR" src="{{recipes[5].image}}">
+      </a>
 </body>
 
 <body class="notLogged" *ngIf="!loggedIn">
@@ -91,24 +82,31 @@
     <!-- Wrapper for slides -->
     <div class="carousel-inner">
       <div class="carousel-item active">
-        <img class="img-responsive center-block" id="imgC" src="https://live.staticflickr.com/2070/5778152162_1faa171031_4k.jpg"  style="width: 30%">
-        <div class="carousel-caption">
-          <h3>Comida italiana</h3>
-        </div>
+        <a href="http://localhost:4200/recipes/{{recipes[0].id}}">
+          <img class="img-responsive center-block" id="imgC" src="{{recipes[0].image}}" style="width: 30%" />
+          <div class="carousel-caption">
+            <h3>{{recipes[0].name}}</h3>
+          </div>
+        </a>
       </div>
 
       <div class="carousel-item">
-        <img class="img-responsive center-block" id="imgC" src="https://live.staticflickr.com/4546/25024667938_681327f89a_5k.jpg" style="width: 30%">
-        <div class="carousel-caption">
-          <h3>Comida china</h3>
-        </div>
+        <a href="http://localhost:4200/recipes/{{recipes[1].id}}">
+          <img class="img-responsive center-block" id="imgC" src="{{recipes[1].image}}" style="width: 30%" />
+          <div class="carousel-caption">
+            <h3>{{recipes[1].name}}</h3>
+          </div>
+        </a>
       </div>
 
       <div class="carousel-item">
-        <img class="img-responsive center-block" id="imgC" src="https://live.staticflickr.com/4418/36655282574_b2fa4034ed_5k.jpg" style="width: 30%">
-        <div class="carousel-caption">
-          <h3>Comida mediterránea</h3>
-        </div>
+        <a href="http://localhost:4200/recipes/{{recipes[2].id}}">
+          <img class="img-responsive center-block" id="imgC" src="{{recipes[2].image}}" style="width: 30%" />
+          <div class="carousel-caption">
+            <h3>{{recipes[2].name}}</h3>
+
+          </div>
+        </a>
       </div>
     </div>
 
