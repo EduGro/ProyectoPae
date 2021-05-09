@@ -1,12 +1,5 @@
-@import url("https://fonts.googleapis.com/css?family=Lato:400,400i,700");
-
-body {
-  margin: 0;
-  font-family: 'Lato', sans-serif;
-}
-
 .header {
-  min-height: 60vh;
+  min-height: 50vh;
   background: #009FFF;
   background: linear-gradient(to right, #ffd400, #a90505);
   color: white;
@@ -52,7 +45,8 @@ body {
 }
 
 .profile {
-    padding: 5%;
+  padding: 3%;
+  padding-bottom: 0%;
 }
 
 h2 {

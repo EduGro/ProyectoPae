@@ -1,8 +1,8 @@
 <nav>
   <ul>
     <li>
-      <img src="../../../assets/iRDb.png" *ngIf="!loggedIn" style="width: 13%;">
-      <img src="../../../assets/iRDb.png" *ngIf="loggedIn">
+      <a routerLink="/main"><img src="../../../assets/iRDb.png" *ngIf="!loggedIn" style="width: 13%;"></a>
+      <a routerLink="/main"><img src="../../../assets/iRDb.png" *ngIf="loggedIn"></a>
     </li>
     <li *ngIf="loggedIn">
       <input type="search" type="text" placeholder="Buscar recetas..." name="search">
@@ -29,6 +29,9 @@
     </li>
     <li>
       <a class="btn" routerLink="/lists" *ngIf="loggedIn">Mis listas</a>
+    </li>
+    <li>
+      <a class="btn" routerLink="/users" *ngIf="loggedIn">Mi perfil</a>
     </li>
     <li>
       <a class="btn" (click)="logout()" *ngIf="loggedIn">Cerrar sesión</a>

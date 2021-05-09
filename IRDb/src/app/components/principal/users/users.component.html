@@ -1,17 +1,17 @@
 <h2 *ngIf="!loggedIn">No hay una sesión iniciada, no hay usuarios para mostrar</h2>
 
 <section class="profile" *ngIf="loggedIn">
-    <header class="header">
-      <div class="details">
-        <img src="{{user.image}}" alt="Foto de perfil" class="profile-pic">
-        <h1 class="heading">{{user.name}}</h1>
-        <div class="stats">
-          <div>
-            <h4>Email</h4>
-            <p>{{user.email}}</p>
-          </div>
+  <header class="header">
+    <div class="details">
+      <img src="{{user.image}}" alt="Foto de perfil" class="profile-pic">
+      <h1 class="heading">{{user.name}}</h1>
+      <div class="stats">
+        <div>
+          <h4>Email</h4>
+          <p>{{user.email}}</p>
         </div>
       </div>
-    </header>
-  </section>
+    </div>
+  </header>
+</section>
 <app-lists></app-lists>
