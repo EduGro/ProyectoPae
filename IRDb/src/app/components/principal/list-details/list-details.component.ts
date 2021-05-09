@@ -1,6 +1,8 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/common/services/auth.service';
+import { environment } from 'src/environments/environment';
 
 interface Recipes{
   image: string;
@@ -23,9 +25,12 @@ export class ListDetailsComponent implements OnInit {
 
   @Input() loggedIn: boolean;
 
-  constructor(private router: Router, private authService: AuthService) { }
+  listId: string;
+
+  constructor(private router: Router, private authService: AuthService, private httpClient: HttpClient) { }
 
   ngOnInit(): void {
+    this.listId = this.router.url.substring(8);
     this.authService.loginStatus.subscribe(flag => {
       console.log('Login status', flag);
       this.loggedIn = flag;
@@ -34,6 +39,17 @@ export class ListDetailsComponent implements OnInit {
 
   selectRecipe(recipe:Recipes){
     this.router.navigate(['./recipes']);
+  }
+
+  deleteList() {
+    const url = `${environment.apiUrl}deletelist/`;
+    this.httpClient.delete(url, {
+      params: {
+        idList: this.listId,
+        email: localStorage.getItem('email')
+      }
+    }).toPromise();
+    this.router.navigate(['/lists']);
   }
 
 }

@@ -1,28 +1,23 @@
 nav {
-    background-color: #d8753f;
-    width: 100%;
+  background-color: #d8753f;
+  width: 100%;
 }
 
 ul {
-    margin: 0;
-    padding: 0;
-    display: flex;
-    align-items: stretch;
-    justify-content: space-between;
-    width: 85%;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  align-items: stretch;
+  justify-content: space-between;
+  width: 100%;
 }
 
 li {
-    margin: 1vh;
-    display: block;
-    flex: 0 1 auto;
-    list-style-type: none;
-    color: black;
-}
-
-li img {
-    border-radius: 15%;
-    width: 75%;
+  margin: 1vh;
+  display: block;
+  flex: 0 1 auto;
+  list-style-type: none;
+  color: black;
 }
 
 input {
@@ -53,8 +48,9 @@ button img{
     display: inline-block;
 }
 
-a {
-  font-size: larger;
+a:not(a:first-of-type) {
+  position: fixed;
+  font-size: large;
   color: black;
 }
 

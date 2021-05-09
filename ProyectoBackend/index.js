@@ -232,7 +232,8 @@ app.get('/getlists', (req, res) => {
         for (let i in listas) {
             let lista = {
                 "nombre": listas[i].nombre,
-                "descripcion": listas[i].descripcion
+                "descripcion": listas[i].descripcion,
+                "id": listas[i]._id
             }
             lists.push(lista);
         }
@@ -300,38 +301,13 @@ app.get('/auth', (req, res) => {
     });
 });
 
-/*const io = socketIo(server, {
-  cors: {
-    origin: 'http://localhost:4200',
-    methods: ['GET', 'POST'],
-    allowHeaders: ['Authorization'],
-    credentials: true
-  }
-});*/
-/*
-app.post('/usermongo',(req,res)=>{
-    console.log("ewe")
-    var nombre = req.body['nombre'];
-    var correo = req.body['correo'];
-    var password = req.body['password'];
-    db.insertUser(nombre, correo, password);
-}).catch(e => {
-    console.log(e);
-    res.status(400).send('Bad Request');
-});*/
-
-/*io.on('connection', socket => {
-
-    const authToken = socket.handshake.headers['authorization'];
-
-    console.log('Se ha conectado', authToken);
-
-    socket.join('admins');
-
-    socket.on('likedNews', data => {
-        console.log('News liked: ', data);
-
-    // io.to('admins').emit('userLikedNews', data);
-    socket.broadcast.emit('userLikedNews', data);
-  })
-})*/
+app.delete('/deletelist', (req, res) => {
+    var email = req.query['email'];
+    db.searchUsers(email).then((user) => {
+        db.deleteList(user[0]._id, req.query['idList']);
+        res.status(200);
+    }).catch(e => {
+        console.log(e);
+        res.status(404).send('Not Found');
+    });
+});

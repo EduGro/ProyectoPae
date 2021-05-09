@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { environment } from './../../../../environments/environment';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from 'src/app/common/services/auth.service';
@@ -40,7 +40,7 @@ export class ListsComponent implements OnInit {
           let addedList: List = {
             'name': r[i].nombre,
             'descripcion': r[i].descripcion,
-            'id': i as unknown as number
+            'id': r[i].id
           }
           this.lists.push(addedList);
         }
@@ -74,7 +74,6 @@ export class ListsComponent implements OnInit {
   }
 
   listAdd() {
-    console.log(this.form.value);
     const url = `${environment.apiUrl}addlist/`;
     this.httpClient.post(url, {
       params: {

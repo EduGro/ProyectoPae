@@ -107,16 +107,32 @@ class Database {
     
     insertUser(name, email, password){
         db.collection('users').insertOne({
-        nombre: name,
-        correo: email,
-        password: password
-    }).then((r) => {
-        console.log("Insertado");
-    }).catch(err => {
-        console.log("No se inserto", err);
-    });
-}
+            nombre: name,
+            correo: email,
+            password: password
+        }).then((r) => {
+            console.log("Insertado");
+        }).catch(err => {
+            console.log("No se inserto", err);
+        });
+    }
 
+    deleteList(idUser, idList) {
+        db.collection('usuarios-lista').deleteOne({
+            idUsuario: idUser.toString,
+            idLista: idList
+        }).then(() => {
+            db.collection('listas').deleteOne({
+                _id: ObjectId(idList)
+            }).then(() => {
+                console.log("Lista eliminada");
+            }).catch(err => {
+                console.log("No se eliminó de listas", err);
+            });
+        }).catch(err => {
+            console.log("No se eliminó de users-lists", err);
+        });
+    }
 }
 
 module.exports = Database;

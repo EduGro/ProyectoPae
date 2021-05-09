@@ -1,13 +1,39 @@
 <h2 *ngIf="!loggedIn">No hay una sesión iniciada, no hay detalles para mostrar</h2>
 
-<ul *ngIf="loggedIn">
-  <li *ngFor="let recipe of recipes">
-    <a (click)="selectRecipe(recipe)">
-      <img src="{{recipe.image}}" width="75" height="75">
-      <div class='recipeName'>
-        {{recipe.name}}
+<div *ngIf="loggedIn">
+  <button class="btn" data-toggle="modal" data-target="#myModal">Eliminar lista</button>
+  <ul>
+    <li *ngFor="let recipe of recipes">
+      <a (click)="selectRecipe(recipe)">
+        <img src="{{recipe.image}}" width="75" height="75">
+        <div class='recipeName'>
+          {{recipe.name}}
+        </div>
+      </a>
+      <hr>
+    </li>
+  </ul>
+</div>
+
+<div class="modal fade my-modal" tabindex="-1" role="dialog" id='myModal'>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+         <h5 class="modal-title">Eliminar lista</h5>
+         <button type="button" class="close" aria-label="Close" data-dismiss="modal"><span aria-hidden="true">&times;</span>
+         </button>
       </div>
-    </a>
-    <hr>
-  </li>
-</ul>
+      <div class="modal-body">
+        <div class="col">
+          <div class="row">
+            <p>¿Estás seguro de que quieres eliminar esta lista?</p>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="submit" (click)="deleteList()" class="btn btn-danger" data-dismiss="modal">Eliminar</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+      </div>
+    </div>
+  </div>
+</div>
