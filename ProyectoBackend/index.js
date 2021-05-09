@@ -309,3 +309,29 @@ app.delete('/deletelist', (req, res) => {
         res.status(404).send('Not Found');
     });
 });
+
+app.post('/addtolist', (req, res) => {
+    var idlist = req.body.body.idList;
+    var idrecipe = req.body.body.idRecipe;
+    db.insertRecipeToList(idlist, idrecipe, req.body.body.image, req.body.body.name);
+    res.status(200);
+});
+
+app.get('/getrecipes', (req, res) => {
+    var idList = req.query['idList'];
+    db.searchListasRecetas(idList).then((recetas) => {
+        var recipes = new Array();
+        for (let i in recetas) {
+            let receta = {
+                "nombre": recetas[i].name,
+                "imagen": recetas[i].image,
+                "id": recetas[i].idReceta
+            }
+            recipes.push(receta);
+        }
+        res.status(200).send(recipes);
+    }).catch(e => {
+        console.log(e);
+        res.status(404).send('Not Found');
+    });
+});

@@ -103,7 +103,6 @@ class Database {
             console.log("Falló al insertar", err);
         });
     }
-
     
     insertUser(name, email, password){
         db.collection('users').insertOne({
@@ -132,6 +131,37 @@ class Database {
         }).catch(err => {
             console.log("No se eliminó de users-lists", err);
         });
+    }
+
+    insertUser(user){
+        const collection = db.collection(this.collectionName);
+        collection.insertOne({
+            nombre: user.name,
+            correo: user.email,
+            pass: user.password
+        }).then((r) => {
+            console.log("Insertado");
+        }).catch(err => {
+            console.log("Falló al insertar", err);
+        });
+    }
+
+    insertRecipeToList(idList, idRecipe, image, name) {
+        const collection = db.collection('lista-recetas');
+        collection.insertOne({
+            idLista: idList,
+            idReceta: idRecipe,
+            image: image,
+            name: name
+        }).then((r) => {
+            console.log("Receta insertada a lista");
+        }).catch(err => {
+            console.log("Falló al insertar", err);
+        });
+    }
+
+    searchListasRecetas(idList) {
+        return db.collection('lista-recetas').find({ 'idLista': idList }).toArray();
     }
 }
 
