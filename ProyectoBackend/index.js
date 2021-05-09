@@ -53,28 +53,30 @@ app.listen(3000, () => {
     console.log('app is running in port 3000')
 });
 
-app.post('/authgoogle', (req, res) => {
-    console.log('Datos de google ID token recibidos', req.body.idToken);
+app.get('/authgoogle', (req, res) => {
+    console.log('Datos de google ID token recibidos', req.query['idToken']);
     googleClient.verifyIdToken({
-        idToken: req.body.idToken,
+        idToken: req.query['idToken'],
     }).then(response => {
         const data = response.getPayload();
-        console.log(data);
-        var sending = {
-            "token": 123,
-            "name": data.name,
-            "email": data.email
-        };
-        res.send(sending);
+        db.searchUsers(data.email).then((user) => {
+            if (user.length == 1) {
+                var usuario = {
+                    "token": (Math.floor(Math.random() * 100) + 1) + data.name.substring(0, 3) + data.email.substring(0, 5),
+                    "name": data.name,
+                    "email": data.email
+                };
+                console.log(usuario);
+                res.status(200).send(usuario);
+            } else {
+                res.status(403).send('No se ha registrado');
+            }
+        });
     }).catch(e => {
         console.log(e);
         res.status(400).send('bad credentials');
     })
 
-});
-
-app.get('/authgoogle', (req, res) => {
-    res.status(201).send('Ok');
 });
 
 app.get('/', (req, res) => {
@@ -87,24 +89,26 @@ app.post('/registrogoogle', (req, res) => {
         idToken: req.body.idToken,
     }).then(response => {
         const data = response.getPayload();
-        
-        var sending = {
-            "token": (Math.floor(Math.random() * 100) + 1) + data.name.substring(0, 3) + data.email.substring(0, 5),
-            "name": data.name,
-            "email": data.email
-        };
+        db.searchUsers(data.email).then((user) => {
+            if (user.length == 0) {
+                var sending = {
+                    "token": (Math.floor(Math.random() * 100) + 1) + data.name.substring(0, 3) + data.email.substring(0, 5),
+                    "name": data.name,
+                    "email": data.email
+                };
 
-        var user = {
-            "name": data.name,
-            "email": data.email,
-            "image": data.picture,
-            "password": null
-        };
+                var user = {
+                    "name": data.name,
+                    "email": data.email,
+                    "image": data.picture
+                };
 
-        db.useCollection('users');
-        db.insertUserGoogle(user);
-
-        res.send(sending);
+                db.insertUserGoogle(user);
+                res.status(200).send(sending);
+            } else {
+                res.status(403).send('Ya está registrado');
+            }
+        });
     }).catch(e => {
         console.log(e);
         res.status(400).send('bad credentials');
@@ -172,10 +176,6 @@ app.get('/recipesSearch' ,async function (req, res) {
     res.status(200).send("RESPUESTA!!!!");
 });
 
-app.get('/registrogoogle', (req, res) => {
-    res.status(201).send('Ok');
-});
-
 app.get('/getlists', (req, res) => {
     var email = req.query['email'];
     db.searchUsersListas(email).then((listas) => {
@@ -187,7 +187,6 @@ app.get('/getlists', (req, res) => {
             }
             lists.push(lista);
         }
-        console.log(listas);
         res.status(200).send(lists);
     }).catch(e => {
         console.log(e);

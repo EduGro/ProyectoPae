@@ -23,7 +23,7 @@ export class SessionService {
 
   googleLogin(idToken: string): Promise<any>{
     const url = `${environment.apiUrl}authgoogle`;
-    return this.httpClient.post(url, { idToken: idToken }).toPromise();
+    return this.httpClient.get(url, { params: { idToken: idToken} }).toPromise();
   }
 
   googleReg(idToken: string): Promise<any> {

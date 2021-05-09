@@ -52,7 +52,7 @@ class Database {
     }
 
     insertUserGoogle(user){
-        const collection = db.collection(this.collectionName);
+        const collection = db.collection('users');
         collection.insertOne({
             nombre: user.name,
             correo: user.email,

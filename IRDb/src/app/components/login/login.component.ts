@@ -19,20 +19,6 @@ export class LoginComponent implements OnInit {
   constructor(private formBuilder: FormBuilder, private socialAuthService:SocialAuthService, private sessionService: SessionService, private authService: AuthService, private router:Router) { }
 
   ngOnInit(): void {
-    this.socialAuthService.authState.subscribe(user => {
-      if (user) {
-        console.log(user.idToken);
-        this.sessionService.googleLogin(user.idToken).then(response => {
-          console.log(response);
-          this.loginError = false;
-          this.authService.save(response, true);
-          this.router.navigate(['/principal']);
-        });
-      } else {
-        console.log('Se cerro la sesion');
-      }
-    });
-
     this.form = this.formBuilder.group({
       correo: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]]
@@ -45,7 +31,20 @@ export class LoginComponent implements OnInit {
   }
 
   googleLogin() {
-    this.socialAuthService.signIn(GoogleLoginProvider.PROVIDER_ID);
+    this.socialAuthService.signIn(GoogleLoginProvider.PROVIDER_ID).then((res) => {
+      this.sessionService.googleLogin(res.idToken).then(response => {
+      console.log(response);
+      this.loginError = false;
+      this.authService.save(response, true);
+      this.router.navigate(['/principal']);
+    }).catch(() => {
+      this.socialAuthService.signOut(true).then(() => {
+        document.getElementById('error').innerHTML = ('<p>No existe un usuario con ese correo<br>Por favor, cree una cuenta</p>');
+      });
+
+    });
+    })
+    
   }
 
   loginNormal() {

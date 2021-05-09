@@ -47,6 +47,8 @@ export class RegistroComponent implements OnInit {
           this.registerError = false;
           this.authService.save(response, true);
           this.router.navigate(['/principal']);
+        }).catch(() => {
+          document.getElementById('error').innerHTML = ('<p>Ya existe un usuario con ese correo<br>Por favor, inicie sesión</p>');
         });
       } else {
         console.log('Se cerro la sesion');
@@ -69,7 +71,6 @@ export class RegistroComponent implements OnInit {
   }
 
   googleReg() {
-    console.log(GoogleLoginProvider.PROVIDER_ID);
     this.socialAuthService.signIn(GoogleLoginProvider.PROVIDER_ID);
   }
 

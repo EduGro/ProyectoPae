@@ -1,14 +1,13 @@
-form {
+div {
+  padding-top: 10px;
   text-align: center;
   font-size: large;
 }
 
-div {
-  padding-top: 10px;
-}
-
 label {
   padding-right: 10px;
+  width: 25%;
+  justify-content: right;
 }
 
 input {
@@ -22,17 +21,17 @@ input {
 }
 
 button {
-    border-color: #ff8100;
-    background-color: #ff8100;
-    font-size: large;
-    margin: 5px;
-    line-height: 30px;
-    margin-bottom: 15px;
+  color: black;
+  background-color: #ff8100;
+  font-size: large;
+  margin: 5px;
+  line-height: 30px;
+  margin-bottom: 15px;
 }
 
 button:hover {
-    border-color: orangered;
-    background-color: orangered;
+  background-color: #800000;
+  color: white;
 }
 
 a {
@@ -47,4 +46,9 @@ a:hover {
 
 a:visited {
     color: #990000;
+}
+
+#error {
+  color: #980000;
+  font-weight: bold;
 }

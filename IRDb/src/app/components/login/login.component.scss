@@ -1,10 +1,7 @@
-form {
-    text-align: center;
-    font-size: large;
-}
-
 div {
     padding-top: 10px;
+    text-align: center;
+    font-size: large;
 }
 
 label {
@@ -22,7 +19,7 @@ input {
 }
 
 button {
-    border-color: #ff8100;
+    color: black;
     background-color: #ff8100;
     font-size: large;
     margin: 5px;
@@ -31,8 +28,8 @@ button {
 }
 
 button:hover {
-    border-color: orangered;
-    background-color: orangered;
+    background-color: #800000;
+    color: white;
 }
 
 a {

@@ -44,7 +44,6 @@ export class ListsComponent implements OnInit {
           }
           this.lists.push(addedList);
         }
-        console.log(this.lists);
       });
     }
 

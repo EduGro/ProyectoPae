@@ -48,7 +48,7 @@ export class AuthService {
   }
 
   logout() {
-    this.clear()
+    this.clear();
     return new Promise<void>((resolve, reject) => { resolve(); });
   }
 }
