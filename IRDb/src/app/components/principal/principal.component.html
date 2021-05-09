@@ -1,8 +1,8 @@
 <nav>
   <ul>
     <li>
-      <a routerLink="/main"><img src="../../../assets/iRDb.png" *ngIf="loggedIn" style="width:35%; border-radius: 15%;"></a>
-      <img src="../../../assets/iRDb.png" *ngIf="!loggedIn" style="width:13%; border-radius: 15%;">
+      <a routerLink="/main"><img src="../../../assets/iRDb.png" *ngIf="loggedIn" style="width:80px; border-radius: 15%;"></a>
+      <img src="../../../assets/iRDb.png" *ngIf="!loggedIn" style="width:80px; border-radius: 15%;">
     </li>
     <li *ngIf="loggedIn">
       <input type="search" type="text" placeholder="Buscar recetas..." name="search" [(ngModel)]="searching">
