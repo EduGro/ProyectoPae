@@ -25,7 +25,9 @@ require('dotenv').config({
 // create application/json parser
 var jsonParser = bodyParser.json();
 
-const { connect } = require('http2');
+const {
+    connect
+} = require('http2');
 
 const app = express();
 app.use(cors());
@@ -115,24 +117,32 @@ app.post('/registrogoogle', (req, res) => {
     })
 });
 
-app.get('/recipesRandom', async function (req, res) { 
+app.get('/recipesRandom', async function (req, res) {
     var url = `https://api.spoonacular.com/recipes/random?apiKey=${process.env.SPOON_KEY}&number=6`;
     fetch(url)
         .then(response => response.json())
         .then(result => {
-            res.status(200).send(result)
-    });
-});
+            if (result == null || result == "")
+                res.status(500).send("Server Failure")
+            var recipes = result["recipes"];
+            var recipe = [];
+            var i;
+            for (i = 0; i < recipes.length; i++) {
+                var iRecipe = {
+                    name: recipes[i]["title"],
+                    id: recipes[i]["id"],
+                    image: recipes[i]["image"]
+                };
+                console.log(iRecipe);
+                recipe.push(iRecipe);
+            }
+            res.status(200).send(recipe);
 
-app.get('/recipesRandom', async function (req, res) { 
-    var url = `https://api.spoonacular.com/recipes/random?apiKey=${process.env.SPOON_KEY}&number=6`;
-    fetch(url)
-        .then(response => response.json())
-        .then(result => {
-            res.status(200).send(result)
-    });
+        }).catch(e => {
+            console.log(e);
+            res.status(500).send("Server error");
+        });
 });
-
 //https://spoonacular.com/food-api/docs
 
 //used by upload form
@@ -144,36 +154,75 @@ app.get('/recipesRandom', async function (req, res) {
     };
     res.send(sending);
 });*/
-app.get('/recipesInfo', async function (req, res) { 
+app.post('/recipesInfo', async function (req, res) {
     var id = req.body.id;
     var url = `https://api.spoonacular.com/recipes/${id}/information?apiKey=${process.env.SPOON_KEY}`;
     fetch(url)
         .then(response => response.json())
         .then(result => {
-            res.status(200).send(result)
-    });
+            if (result == "" || result == null)
+                res.status(404).send("Recipe id not found");
+            console.log(result);
+            var ingredient = [];
+            var ingredients = result["extendedIngredients"];
+            var i;
+            for (i = 0; i < ingredients.length; i++) {
+                ingredient.push(ingredients[i]["original"]);
+            }
+            var step = [];
+            var steps = result["analyzedInstructions"];
+            if (steps != "" && steps != null) {
+                steps = steps[0]["steps"];
+                for (i = 0; i < steps.length; i++)
+                    step.push(steps[i]["step"]);
+            } else
+                step.push("Steps not found");
+            var cuicine = "";
+            if (result["cuisines"] == null || result["cuisines"] == "")
+                cuicine = "Cuicine not found";
+            else
+                for (i = 0; i < result["cuisines"].length; i++)
+                    cuicine += (result["cuisines"][i] + ",")
+            var toSend = {
+                name: result["title"],
+                prep_time: `${result["readyInMinutes"]} min`,
+                cost: `$${result["pricePerServing"]}`,
+                servings: `${result["servings"]}`,
+                cuicine: cuicine,
+                ingredients: ingredient,
+                steps: step,
+                image: result["image"]
+            }
+            res.status(200).send(toSend)
+        }).catch(e => {
+            console.log(e);
+            res.status(500).send("Server error");
+        });
 });
 
-app.get('/recipesSearch' ,async function (req, res) { 
+app.post('/recipesSearch', async function (req, res) {
     var query = req.body.query;
-    console.log(req.body);
     var cuisine = req.body.cuisine;
     var intolerances = req.body.intolerances;
     var url = `https://api.spoonacular.com/recipes/complexSearch?query=${query}&apiKey=${process.env.SPOON_KEY}&number=5`;
-    console.log(cuisine);
-    if(cuisine != null){
+    if (cuisine != null) {
         url += `&cuisine=${cuisine}`;
     }
-    if(intolerances != null){
+    if (intolerances != null) {
         url += `&intolerances=${intolerances}`;
     }
-    console.log(url);
-    /*fetch(url)
+    fetch(url)
         .then(response => response.json())
         .then(result => {
-            res.status(200).send(result)
-    });*/
-    res.status(200).send("RESPUESTA!!!!");
+            if (result["totalResults"] > 0)
+                res.status(200).send(result["results"])
+            else
+                res.status(404).send("No results");
+
+        }).catch(e => {
+            console.log(e);
+            res.status(500).send("Server error");
+        });
 });
 
 app.get('/getlists', (req, res) => {
@@ -273,14 +322,14 @@ app.post('/usermongo',(req,res)=>{
 
 /*io.on('connection', socket => {
 
-  const authToken = socket.handshake.headers['authorization'];
+    const authToken = socket.handshake.headers['authorization'];
 
-  console.log('Se ha conectado', authToken);
+    console.log('Se ha conectado', authToken);
 
-  socket.join('admins');
+    socket.join('admins');
 
-  socket.on('likedNews', data => {
-    console.log('News liked: ', data);
+    socket.on('likedNews', data => {
+        console.log('News liked: ', data);
 
     // io.to('admins').emit('userLikedNews', data);
     socket.broadcast.emit('userLikedNews', data);

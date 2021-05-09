@@ -18,30 +18,34 @@
     <!-- Wrapper for slides -->
     <div class="carousel-inner">
       <div class="carousel-item active">
-        <img class="img-responsive center-block" id="imgC" src="https://www.nippon.com/es/ncommon/contents/japan-data/170454/170454.jpg"
+        <a href="http://localhost:4200/recipes/{{recipes[0].id}}">
+        <img class="img-responsive center-block" id="imgC" src="{{recipes[0].image}}"
           style="width: 30%" />
         <div class="carousel-caption">
-          <h3>Nombre de receta</h3>
-          <h5>Autor</h5>
+          <h3>{{recipes[0].name}}</h3>
         </div>
+      </a>
       </div>
 
       <div class="carousel-item">
-        <img class="img-responsive center-block" id="imgC" src="https://www.nippon.com/es/ncommon/contents/japan-data/170454/170454.jpg"
-          style="width: 30%" />
-        <div class="carousel-caption">
-          <h3>Nombre de receta</h3>
-          <h5>Autor</h5>
+        <a href="http://localhost:4200/recipes/{{recipes[1].id}}">
+          <img class="img-responsive center-block" id="imgC" src="{{recipes[1].image}}"
+            style="width: 30%" />
+          <div class="carousel-caption">
+            <h3>{{recipes[1].name}}</h3>
         </div>
+      </a>
       </div>
 
       <div class="carousel-item">
-        <img class="img-responsive center-block" id="imgC" src="https://www.nippon.com/es/ncommon/contents/japan-data/170454/170454.jpg"
-          style="width: 30%" />
-        <div class="carousel-caption">
-          <h3>Nombre de receta</h3>
-          <h5>Autor</h5>
+        <a href="http://localhost:4200/recipes/{{recipes[2].id}}">
+          <img class="img-responsive center-block" id="imgC" src="{{recipes[2].image}}"
+            style="width: 30%" />
+          <div class="carousel-caption">
+            <h3>{{recipes[2].name}}</h3>
+
         </div>
+      </a>
       </div>
     </div>
 
@@ -60,7 +64,7 @@
   <div class="grid">
     <h2>Recetas Recientes</h2>
     <div class="row">
-      <img id="imgR" src="https://www.nippon.com/es/ncommon/contents/japan-data/170454/170454.jpg">
+      <img id="imgR" src="{{recipes[4].image}}">
       <img id="imgR"
         src="https://www.washingtonpost.com/wp-apps/imrs.php?src=https://arc-anglerfish-washpost-prod-washpost.s3.amazonaws.com/public/2KL6JYQYH4I6REYMIWBYVUGXPI.jpg&w=1200">
       <img id="imgR" src="https://daiyafoods.com/wp-content/themes/daiya2016/assets/videos/header-mac.jpg">
