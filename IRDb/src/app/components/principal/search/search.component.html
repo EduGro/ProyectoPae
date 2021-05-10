@@ -3,7 +3,7 @@
 <div *ngIf="ban">
   <ul *ngIf="loggedIn">
     <li *ngFor="let recipe of recipes">
-      <a href="http://localhost:4200/recipes/{{recipe.id}}">
+      <a href="https://front-end-pae-equipo4.herokuapp.com/recipes/{{recipe.id}}">
         <img src="{{recipe.image}}" width="75" height="75">
         <div class='recipeName'>
           {{recipe.title}}
