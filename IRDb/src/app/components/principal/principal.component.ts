@@ -1,7 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/common/services/auth.service';
 import { IDropdownSettings } from 'ng-multiselect-dropdown';
+import { BehaviorSubject } from 'rxjs/internal/BehaviorSubject';
+
 
 @Component({
   selector: 'app-principal',
@@ -15,6 +17,15 @@ export class PrincipalComponent implements OnInit {
   selectedItemsI = [];
   dropdownListC = [];
   selectedItemsC = [];
+
+  private _query = new BehaviorSubject<string>('');
+  query = this._query.asObservable();
+  searching: string;
+  private _cuicine = new BehaviorSubject<string>('');
+  cuicine = this._cuicine.asObservable();
+  private _alergies = new BehaviorSubject<string>('');
+  alergies = this._alergies.asObservable();
+
 
   loggedIn: boolean = false;
 
@@ -101,11 +112,28 @@ export class PrincipalComponent implements OnInit {
     });
   }
   
-  onItemSelect(item: any) {
-    console.log(item);
-  }
-  onSelectAll(items: any) {
-    console.log(items);
+
+  search() {
+    var i;
+    var tempCuicine;
+    if(this.selectedItemsC.length > 0){
+      tempCuicine = "";
+      for(i = 0; i < this.selectedItemsC.length-1; i++)
+        tempCuicine += this.selectedItemsC[i].item_text + ',';
+    tempCuicine += this.selectedItemsC[this.selectedItemsC.length-1].item_text;
+    }
+    var tempAlergies;
+    if(this.selectedItemsI.length > 0){
+      tempAlergies = "";
+      for(i = 0; i < this.selectedItemsI.length-1; i++)
+        tempAlergies += this.selectedItemsI[i].item_text + ',';
+    tempAlergies += this.selectedItemsI[this.selectedItemsI.length-1].item_text;
+    }
+    this._cuicine.next(tempCuicine);
+    this._query.next(this.searching);
+    this._alergies.next(tempAlergies);
+    this.router.navigate(['/search']);
+
   }
 }
 

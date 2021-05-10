@@ -56,9 +56,11 @@ import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
               environment.clientId
             )
           },
+
         ]
       } as SocialAuthServiceConfig,
-    }
+    },
+    PrincipalComponent
   ],
   bootstrap: [AppComponent]
 })

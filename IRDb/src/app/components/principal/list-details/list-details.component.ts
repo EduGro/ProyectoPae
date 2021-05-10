@@ -17,11 +17,7 @@ interface Recipes{
 })
 export class ListDetailsComponent implements OnInit {
 
-  @Input() recipes:Recipes[] = [{image: "https://i.imgur.com/WjjgwNV.jpg", name:"Flan",
-    id:1}, {image: "https://i.imgur.com/Az5zKiA.jpeg",name:"Carne Asada",
-    id:2}, {image: "https://i.imgur.com/l6ZqE7w.jpg", name:"Ramen",
-    id:3}
-  ];
+  @Input() recipes:Recipes[] = [];
 
   @Input() loggedIn: boolean;
 
@@ -35,10 +31,33 @@ export class ListDetailsComponent implements OnInit {
       console.log('Login status', flag);
       this.loggedIn = flag;
     });
+
+    if (this.loggedIn) {
+      this.getRecipes().then((r) => {
+        for (let i in r) {
+          let addedRecipe: Recipes = {
+            'name': r[i].nombre,
+            'image': r[i].imagen,
+            'id': r[i].id
+          }
+          this.recipes.push(addedRecipe);
+        }
+      });
+    }
   }
 
-  selectRecipe(recipe:Recipes){
-    this.router.navigate(['./recipes']);
+  getRecipes() {
+    const url = `${environment.apiUrl}getrecipes/`;
+    return this.httpClient.get(url, {
+      params: {
+        idList: this.listId
+      }
+    }).toPromise();
+  }
+
+  selectRecipe(recipe: Recipes) {
+    console.log(recipe);
+    this.router.navigate([`./recipes/${recipe.id}`]);
   }
 
   deleteList() {

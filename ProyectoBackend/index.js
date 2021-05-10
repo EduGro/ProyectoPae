@@ -180,7 +180,6 @@ app.get('/recipesRandom', async function (req, res) {
                     id: recipes[i]["id"],
                     image: recipes[i]["image"]
                 };
-                console.log(iRecipe);
                 recipe.push(iRecipe);
             }
             res.status(200).send(recipe);
@@ -209,7 +208,6 @@ app.post('/recipesInfo', async function (req, res) {
         .then(result => {
             if (result == "" || result == null)
                 res.status(404).send("Recipe id not found");
-            console.log(result);
             var ingredient = [];
             var ingredients = result["extendedIngredients"];
             var i;
@@ -353,6 +351,32 @@ app.delete('/deletelist', (req, res) => {
     db.searchUsers(email).then((user) => {
         db.deleteList(user[0]._id, req.query['idList']);
         res.status(200);
+    }).catch(e => {
+        console.log(e);
+        res.status(404).send('Not Found');
+    });
+});
+
+app.post('/addtolist', (req, res) => {
+    var idlist = req.body.body.idList;
+    var idrecipe = req.body.body.idRecipe;
+    db.insertRecipeToList(idlist, idrecipe, req.body.body.image, req.body.body.name);
+    res.status(200);
+});
+
+app.get('/getrecipes', (req, res) => {
+    var idList = req.query['idList'];
+    db.searchListasRecetas(idList).then((recetas) => {
+        var recipes = new Array();
+        for (let i in recetas) {
+            let receta = {
+                "nombre": recetas[i].name,
+                "imagen": recetas[i].image,
+                "id": recetas[i].idReceta
+            }
+            recipes.push(receta);
+        }
+        res.status(200).send(recipes);
     }).catch(e => {
         console.log(e);
         res.status(404).send('Not Found');

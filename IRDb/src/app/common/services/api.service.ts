@@ -10,7 +10,7 @@ export class ApiService {
   constructor(private httpClient: HttpClient) { }
 
   recipeSearch(query: string, cuisine: string, intolerances: string): Promise<any>{
-    const url = `${environment.apiUrl}recipeSearch`;
+    const url = `${environment.apiUrl}recipesSearch`;
     return this.httpClient.post(url, { query: query, cuisine: cuisine, intolerances: intolerances }).toPromise();
   }
 
