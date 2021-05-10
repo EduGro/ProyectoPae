@@ -3,7 +3,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
 import { environment } from './../../../environments/environment'
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { SocialAuthService, GoogleLoginProvider } from 'angularx-social-login';
 import { AuthService } from 'src/app/common/services/auth.service';
 import { SessionService } from 'src/app/common/services/session.service';
@@ -17,6 +17,7 @@ export class RegistroComponent implements OnInit {
 
   form: FormGroup;
   registerError: boolean;
+  fileToUpload: File = null;
 
   constructor(private formBuilder: FormBuilder, private socialAuthService: SocialAuthService, private sessionService: SessionService, private authService: AuthService, private router: Router,  private httpClient: HttpClient) { }
 
@@ -25,7 +26,8 @@ export class RegistroComponent implements OnInit {
       nombre: ['', Validators.required],
       correo: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]],
-      confirmar: ['', [Validators.required, Validators.minLength(6)]]
+      confirmar: ['', [Validators.required, Validators.minLength(6)]],
+      perfil: ['', Validators.required],
     }, {
       validators: () => {
         if (!this.form) return;
@@ -37,6 +39,7 @@ export class RegistroComponent implements OnInit {
           }
         }
       }
+      
     });
 
     this.socialAuthService.authState.subscribe(user => {
@@ -54,20 +57,23 @@ export class RegistroComponent implements OnInit {
         console.log('Se cerro la sesion');
       }
     })
+
+
   }
 
-  registrar() {
-    console.log(this.form.value)
-    const url = `${environment.apiUrl}usermongo/`;
-    console.log(url)
-    this.httpClient.post(url, {
-      params:{},
-      body: {
-        nombre: this.form.value.nombre,
-        correo: this.form.value.correo,
-        password: this.form.value.password
-      }
-    })
+  setFile(files: FileList) {
+    this.fileToUpload = files.item(0);
+    console.log(this.fileToUpload);
+  }
+
+  registrar() {    
+    this.sessionService.registrar(this.form.value.nombre, this.form.value.correo, this.form.value.password).then(response => {
+      this.authService.save({ token: '1', email: this.form.value.correo, name: this.form.value.nombre}, false);
+      this.router.navigate(['/principal']);
+    }).catch((e) => {
+      document.getElementById('error').innerHTML = ('<p>Ya existe un usuario con ese correo<br>Por favor, inicie sesión</p>');
+      console.log(e);
+    });
   }
 
   googleReg() {
@@ -75,3 +81,4 @@ export class RegistroComponent implements OnInit {
   }
 
 }
+

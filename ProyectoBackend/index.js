@@ -34,6 +34,18 @@ app.use(cors());
 
 let db = new Database();
 
+app.use(express.static(__dirname + '/public'));
+
+const storage = multer.diskStorage({
+    destination: function(req, file, cb) {
+        cb(null, 'uploads/');
+    },
+
+    filename: function(req, file, cb) {
+        cb(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname));
+    }
+});
+
 app.use(function (req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
@@ -53,6 +65,30 @@ const googleClient = new OAuth2Client(process.env.GOOGLE_CLIENT_ID, process.env.
 
 app.listen(3000, () => {
     console.log('app is running in port 3000')
+});
+
+app.post('/imagenperfil', (req, res) => {
+    console.log("imagen perfil")
+    // 'profile_pic' is the name of our file input field in the HTML form
+    let upload = multer({ storage: storage}).single(req.body.imgperfil);
+
+    upload(req, res, function(err) {
+        // req.file contains information of uploaded file
+        // req.body contains information of text fields, if there were any
+
+        if (req.fileValidationError) {
+            return res.send(req.fileValidationError);
+        }
+        else if (!req.file) {
+            return res.send('Please select an image to upload');
+        }
+        else if (err instanceof multer.MulterError) {
+            return res.send(err);
+        }
+        else if (err) {
+            return res.send(err);
+        }
+    });
 });
 
 app.get('/authgoogle', (req, res) => {
@@ -333,5 +369,45 @@ app.get('/getrecipes', (req, res) => {
     }).catch(e => {
         console.log(e);
         res.status(404).send('Not Found');
+    });
+});
+
+const multerStorage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        cb(null, path.join(__dirname, 'images'));
+    },
+    filename: (req, file, cb) => {
+        cb(null, file.originalname);
+    }
+});
+
+const fileFilter = (req, file, cb) => {
+    const flag = file.mimetype.startsWith('image');
+    cb(null, flag);
+};
+
+const uploadFile = multer({
+    storage: multerStorage,
+    fileFilter: fileFilter
+});
+
+app.post('/usermongo', (req, res) => {
+    db.searchUsers(req.body.body['correo']).then((user) => {
+        if (user.length == 0) {
+            let user = {
+                "name": req.body.body['nombre'],
+                "email": req.body.body['correo'],
+                "password": req.body.body['password'],
+                "token": (Math.floor(Math.random() * 100) + 1) + req.body.body['nombre'].substring(0, 3) + req.body.body['correo'].substring(0, 5),
+            }
+            db.insertUser(user, 'https://pbs.twimg.com/profile_images/1056643396507459585/-jhnJW4v.jpg');
+            
+            res.status(200).send(user);
+        } else {
+            res.status(403).send('Ya está registrado');
+        }
+    }).catch(e => {
+        console.log(e);
+        res.status(403).send('Not Found');
     });
 });

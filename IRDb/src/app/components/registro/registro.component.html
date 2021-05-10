@@ -1,4 +1,4 @@
-<form [formGroup]="form" (submit)="registrar()">
+<form [formGroup]="form" enctype="multipart/form-data" (submit)="registrar()">
     <div>
         <label for="nombre">Nombre</label>
         <input type="text" name="nombre" formControlName="nombre" [ngStyle]="{'border-color': form.controls.nombre.valid? '#ffff33' : 'darkred'}">
@@ -15,6 +15,10 @@
         <label for="confirmar">Confirmar contraseña</label>
         <input type="password" name="confirmar" formControlName="confirmar" [ngStyle]="{'border-color': form.controls.confirmar.valid? '#ffff33' : 'darkred'}">
     </div>
+    <!--<div>
+        <label for="imgperfil">Imagen de perfil</label>
+        <input type="file" name="imgperfil" accept="image/x-png,image/jpeg" (change)="setFile($event.target.files)">
+    </div>-->
     <div id="error">
 
     </div>

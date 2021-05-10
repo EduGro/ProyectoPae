@@ -51,7 +51,7 @@ export class LoginComponent implements OnInit {
     this.sessionService.login(this.form.value.correo, this.form.value.password).then(response => {
       if (response) {
         this.loginError = false;
-        this.authService.save({ token: '1', email: this.form.value.correo}, false);
+        this.authService.save({ token: '1', email: this.form.value.correo, name: this.form.value.nombre}, false);
         this.router.navigate(['/principal']);
       } else if (response == null) {
         document.getElementById('error').innerHTML = ('<p>Está registrado con Google.<br>Por favor, inicie sesión con Google</p>');
