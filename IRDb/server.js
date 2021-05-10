@@ -3,7 +3,7 @@ const path = require('path');
 
 const app = express();
 
-app.use(express.static(__dirname + '/dist/<FOLDER_NAME>'));
+app.use(express.static(__dirname + '/dist/index.html'));
 
 app.get('/*', (req,res,next) => {
     res.sendFile(path.join(__dirname + '/dist/dictionary/index.html'));
