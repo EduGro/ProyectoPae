@@ -9,5 +9,13 @@ app.get('*', (req,res,next) => {
     res.sendFile(path.join(__dirname + '/dist/IRDb'));
 });
 
+app.get('/', (req,res,next) => {
+    res.sendFile(path.join(__dirname + '/dist/IRDb'));
+});
+
+app.get('', (req,res,next) => {
+    res.sendFile(path.join(__dirname + '/dist/IRDb'));
+});
+
 
 app.listen(process.env.PORT || 8000);
