@@ -1,13 +1,14 @@
 .recipes {
   padding-left: 5%;
   padding-right: 5%;
-  font-family: "Times New Roman", Times, serif;
+  padding-top: 2%;
+  color: black;
 }
 
 .subtext {
   text-align: center;
 
-  color: gray;
+  color: darkslategray;
 }
 
 .ghost {
@@ -37,6 +38,7 @@ img {
    background-image: url('../../../../assets/ingredients.png');
    background-size: contain;
 }
+
 hr {
   color: #d8753f;
   background-color: #d8753f;
@@ -95,4 +97,39 @@ hr {
 h2 {
   margin-top: 5%;
   margin-left: 5%;
+}
+
+button {
+  float: right;
+  border-color: #d74d38;
+  background-color: #d74d38;
+  color: white;
+  font-size: large;
+  line-height: 30px;
+  margin-bottom: 15%;
+  margin-top: 1%;
+  margin-right: 5%;
+}
+
+.listas li {
+  font-size: 1em;
+  padding-bottom: 1%;
+  list-style-type: none;
+}
+
+.listas a {
+  font-weight: bold;
+}
+
+.listas p {
+  font-size: smaller;
+}
+
+.listas a:hover {
+  cursor: pointer;
+  font-style: italic;
+}
+
+.modal-footer button {
+  margin-bottom: 0%;
 }

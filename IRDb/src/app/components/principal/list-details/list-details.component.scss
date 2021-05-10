@@ -10,16 +10,16 @@ ul {
 }
 
 hr {
-  color: #d8753f;
-  background-color: #d8753f;
-  height: 2px;
-  border-width: 0;
+  background-color: #ef0000;
+  height: 1px;
+  border-width: 10;
 }
 
 img {
   padding-left: 2%;
   display: inline-block;
   vertical-align: auto;
+  width: 15%;
 }
 
 .recipeName {
@@ -28,6 +28,11 @@ img {
   vertical-align: top;
   padding-left: 2%;
 
+}
+
+a:hover {
+  cursor: pointer;
+  font-style: italic;
 }
 
 h2 {
