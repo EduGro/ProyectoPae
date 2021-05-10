@@ -74,9 +74,8 @@ export class RecipesComponent implements OnInit {
     this.httpClient.post(url, {
         idList: list.id,
         idRecipe: this.id,
-        image: this.recipe["image"],
-        name: this.recipe["name"]
-    }).toPromise();
-    window.location.reload();
+        image: this.recipe.image,
+        name: this.recipe.name
+    }).toPromise().then(() => { window.location.reload();});
   }
 }
