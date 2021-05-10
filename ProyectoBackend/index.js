@@ -67,17 +67,6 @@ app.listen(3000, () => {
     console.log('app is running in port 3000')
 });
 
-app.post('/usermongo',(req,res)=>{
-    console.log("usuario mongo")
-    var nombre = req.body['nombre'];
-    var correo = req.body['correo'];
-    var password = req.body['password'];
-    db.insertUser(nombre, correo, password);
-}).catch(e => {
-    console.log(e);
-    res.status(400).send('Bad Request');
-});
-
 app.post('/imagenperfil', (req, res) => {
     console.log("imagen perfil")
     // 'profile_pic' is the name of our file input field in the HTML form
@@ -380,5 +369,45 @@ app.get('/getrecipes', (req, res) => {
     }).catch(e => {
         console.log(e);
         res.status(404).send('Not Found');
+    });
+});
+
+const multerStorage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        cb(null, path.join(__dirname, 'images'));
+    },
+    filename: (req, file, cb) => {
+        cb(null, file.originalname);
+    }
+});
+
+const fileFilter = (req, file, cb) => {
+    const flag = file.mimetype.startsWith('image');
+    cb(null, flag);
+};
+
+const uploadFile = multer({
+    storage: multerStorage,
+    fileFilter: fileFilter
+});
+
+app.post('/usermongo', (req, res) => {
+    db.searchUsers(req.body.body['correo']).then((user) => {
+        if (user.length == 0) {
+            let user = {
+                "name": req.body.body['nombre'],
+                "email": req.body.body['correo'],
+                "password": req.body.body['password'],
+                "token": (Math.floor(Math.random() * 100) + 1) + req.body.body['nombre'].substring(0, 3) + req.body.body['correo'].substring(0, 5),
+            }
+            db.insertUser(user, 'https://pbs.twimg.com/profile_images/1056643396507459585/-jhnJW4v.jpg');
+            
+            res.status(200).send(user);
+        } else {
+            res.status(403).send('Ya está registrado');
+        }
+    }).catch(e => {
+        console.log(e);
+        res.status(403).send('Not Found');
     });
 });

@@ -21,6 +21,17 @@ export class SessionService {
     }).toPromise();
   }
 
+  registrar(nombre:string, correo:string, password:string) {
+    const url = `${environment.apiUrl}`;
+    return this.httpClient.post(`${url}usermongo/`, {
+      body: {
+        nombre: nombre,
+        correo: correo,
+        password: password
+      }
+    }).toPromise();
+  }
+
   googleLogin(idToken: string): Promise<any>{
     const url = `${environment.apiUrl}authgoogle`;
     return this.httpClient.get(url, { params: { idToken: idToken} }).toPromise();

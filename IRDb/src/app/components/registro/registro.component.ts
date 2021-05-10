@@ -17,6 +17,7 @@ export class RegistroComponent implements OnInit {
 
   form: FormGroup;
   registerError: boolean;
+  fileToUpload: File = null;
 
   constructor(private formBuilder: FormBuilder, private socialAuthService: SocialAuthService, private sessionService: SessionService, private authService: AuthService, private router: Router,  private httpClient: HttpClient) { }
 
@@ -25,7 +26,8 @@ export class RegistroComponent implements OnInit {
       nombre: ['', Validators.required],
       correo: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]],
-      confirmar: ['', [Validators.required, Validators.minLength(6)]]
+      confirmar: ['', [Validators.required, Validators.minLength(6)]],
+      perfil: ['', Validators.required],
     }, {
       validators: () => {
         if (!this.form) return;
@@ -59,23 +61,19 @@ export class RegistroComponent implements OnInit {
 
   }
 
-  registrar() {
-    const url = `${environment.apiUrl}`;
-    console.log(url)
-    this.httpClient.post(`${url}usermongo/`, {
-      params:{},
-      body: {
-        nombre: this.form.value.nombre,
-        correo: this.form.value.correo,
-        password: this.form.value.password
-      }
-    })
-    this.httpClient.post(`${url}imagenperfil/`,{
-      params:{},
-      body:{
-        imgperfil: this.form.value.imgperfil,
-      }
-    })
+  setFile(files: FileList) {
+    this.fileToUpload = files.item(0);
+    console.log(this.fileToUpload);
+  }
+
+  registrar() {    
+    this.sessionService.registrar(this.form.value.nombre, this.form.value.correo, this.form.value.password).then(response => {
+      this.authService.save({ token: '1', email: this.form.value.correo, name: this.form.value.nombre}, false);
+      this.router.navigate(['/principal']);
+    }).catch((e) => {
+      document.getElementById('error').innerHTML = ('<p>Ya existe un usuario con ese correo<br>Por favor, inicie sesión</p>');
+      console.log(e);
+    });
   }
 
   googleReg() {

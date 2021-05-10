@@ -38,12 +38,13 @@ class Database {
         this.collectionName = name;
     }
 
-    insertUser(user){
-        const collection = db.collection(this.collectionName);
+    insertUser(user, imagen) {
+        const collection = db.collection('users');
         collection.insertOne({
             nombre: user.name,
             correo: user.email,
-            pass: user.password
+            pass: user.password,
+            image: imagen
         }).then((r) => {
             console.log("Insertado");
         }).catch(err => {
@@ -103,18 +104,6 @@ class Database {
             console.log("Falló al insertar", err);
         });
     }
-    
-    insertUser(name, email, password){
-        db.collection('users').insertOne({
-            nombre: name,
-            correo: email,
-            password: password
-        }).then((r) => {
-            console.log("Insertado");
-        }).catch(err => {
-            console.log("No se inserto", err);
-        });
-    }
 
     deleteList(idUser, idList) {
         db.collection('usuarios-lista').deleteOne({
@@ -130,19 +119,6 @@ class Database {
             });
         }).catch(err => {
             console.log("No se eliminó de users-lists", err);
-        });
-    }
-
-    insertUser(user){
-        const collection = db.collection(this.collectionName);
-        collection.insertOne({
-            nombre: user.name,
-            correo: user.email,
-            pass: user.password
-        }).then((r) => {
-            console.log("Insertado");
-        }).catch(err => {
-            console.log("Falló al insertar", err);
         });
     }
 
