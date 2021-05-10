@@ -12,23 +12,16 @@ export class SessionService {
   }*/
 
   login(correo: string, pass: string): Promise<any> {
-    const url = `${environment.apiUrl}auth`;
-    return this.httpClient.get(url, {
-      params: {
-        correo: correo,
-        pass: pass
-      }
-    }).toPromise();
+    const url = `${environment.apiUrl}auth/?correo=${correo}&pass=${pass}`;
+    return this.httpClient.get(url, {}).toPromise();
   }
 
   registrar(nombre:string, correo:string, password:string) {
     const url = `${environment.apiUrl}`;
     return this.httpClient.post(`${url}usermongo/`, {
-      body: {
         nombre: nombre,
         correo: correo,
         password: password
-      }
     }).toPromise();
   }
 

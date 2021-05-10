@@ -70,9 +70,6 @@ export class RegistroComponent implements OnInit {
     this.sessionService.registrar(this.form.value.nombre, this.form.value.correo, this.form.value.password).then(response => {
       this.authService.save({ token: '1', email: this.form.value.correo, name: this.form.value.nombre}, false);
       this.router.navigate(['/principal']);
-    }).catch((e) => {
-      document.getElementById('error').innerHTML = ('<p>Ya existe un usuario con ese correo<br>Por favor, inicie sesión</p>');
-      console.log(e);
     });
   }
 

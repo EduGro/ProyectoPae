@@ -43,7 +43,7 @@ class Database {
         collection.insertOne({
             nombre: user.name,
             correo: user.email,
-            pass: user.password,
+            password: user.password,
             image: imagen
         }).then((r) => {
             console.log("Insertado");

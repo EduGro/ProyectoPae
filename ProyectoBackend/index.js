@@ -4,7 +4,6 @@ const path = require('path');
 const cors = require('cors');
 var bodyParser = require('body-parser');
 const Database = require('./database');
-const socketIo = require('socket.io');
 const fetch = require("node-fetch");
 
 const {
@@ -38,11 +37,11 @@ let db = new Database();
 app.use(express.static(__dirname + '/public'));
 
 const storage = multer.diskStorage({
-    destination: function(req, file, cb) {
+    destination: function (req, file, cb) {
         cb(null, 'uploads/');
     },
 
-    filename: function(req, file, cb) {
+    filename: function (req, file, cb) {
         cb(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname));
     }
 });
@@ -71,22 +70,21 @@ app.listen(PORT, () => {
 app.post('/imagenperfil', (req, res) => {
     console.log("imagen perfil")
     // 'profile_pic' is the name of our file input field in the HTML form
-    let upload = multer({ storage: storage}).single(req.body.imgperfil);
+    let upload = multer({
+        storage: storage
+    }).single(req.body.imgperfil);
 
-    upload(req, res, function(err) {
+    upload(req, res, function (err) {
         // req.file contains information of uploaded file
         // req.body contains information of text fields, if there were any
 
         if (req.fileValidationError) {
             return res.send(req.fileValidationError);
-        }
-        else if (!req.file) {
+        } else if (!req.file) {
             return res.send('Please select an image to upload');
-        }
-        else if (err instanceof multer.MulterError) {
+        } else if (err instanceof multer.MulterError) {
             return res.send(err);
-        }
-        else if (err) {
+        } else if (err) {
             return res.send(err);
         }
     });
@@ -281,8 +279,8 @@ app.get('/getlists', (req, res) => {
 
 app.post('/addlist', (req, res) => {
     var email = req.query['email'];
-    var nombre = req.body.nombre;
-    var desc = req.body.desc;
+    var nombre = req.body.body.nombre;
+    var desc = req.body.body.desc;
     db.insertToLists(nombre, desc).then((lista) => {
         db.searchUsers(email).then((r) => {
             db.insertToUsuariosListas(lista, r[0]._id);
@@ -393,22 +391,13 @@ const uploadFile = multer({
 });
 
 app.post('/usermongo', (req, res) => {
-    db.searchUsers(req.body['correo']).then((user) => {
-        if (user.length == 0) {
-            let user = {
-                "name": req.body['nombre'],
-                "email": req.body['correo'],
-                "password": req.body['password'],
-                "token": (Math.floor(Math.random() * 100) + 1) + req.body['nombre'].substring(0, 3) + req.body['correo'].substring(0, 5),
-            }
-            db.insertUser(user, 'https://pbs.twimg.com/profile_images/1056643396507459585/-jhnJW4v.jpg');
-            
-            res.status(200).send(user);
-        } else {
-            res.status(403).send('Ya está registrado');
-        }
-    }).catch(e => {
-        console.log(e);
-        res.status(403).send('Not Found');
-    });
+    let user = {
+        "name": req.body['nombre'],
+        "email": req.body['correo'],
+        "password": req.body['password'],
+        "token": (Math.floor(Math.random() * 100) + 1) + req.body['nombre'].substring(0, 3) + req.body['correo'].substring(0, 5),
+    }
+    db.insertUser(user, 'https://pbs.twimg.com/profile_images/1056643396507459585/-jhnJW4v.jpg');
+
+    res.status(200).send(user);
 });

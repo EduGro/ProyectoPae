@@ -61,13 +61,8 @@ export class ListDetailsComponent implements OnInit {
   }
 
   deleteList() {
-    const url = `${environment.apiUrl}deletelist/`;
-    this.httpClient.delete(url, {
-      params: {
-        idList: this.listId,
-        email: localStorage.getItem('email')
-      }
-    }).toPromise();
+    const url = `${environment.apiUrl}deletelist/?idList=${this.listId}&email=${localStorage.getItem('email')}`;
+    this.httpClient.delete(url).toPromise();
     this.router.navigate(['/lists']);
   }
 
