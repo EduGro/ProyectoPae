@@ -79,5 +79,6 @@ export class ListsComponent implements OnInit {
         nombre: this.form.value.nombre,
         desc: this.form.value.descripcion
     }).toPromise();
+    window.location.reload();
   }
 }
