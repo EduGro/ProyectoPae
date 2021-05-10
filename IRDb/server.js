@@ -3,18 +3,22 @@ const path = require('path');
 
 const app = express();
 
-app.use(express.static(__dirname + '/dist/IRDb'));
+app.use(express.static(__dirname + '/dist/IRDb/index.html'));
 
 app.get('*', (req,res,next) => {
-    res.sendFile(path.join(__dirname + '/dist/IRDb'));
+    res.sendFile(path.join(__dirname + '/dist/IRDb/index.html'));
 });
 
 app.get('/', (req,res,next) => {
-    res.sendFile(path.join(__dirname + '/dist/IRDb'));
+    res.sendFile(path.join(__dirname + '/dist/IRDb/index.html'));
 });
 
 app.get('', (req,res,next) => {
-    res.sendFile(path.join(__dirname + '/dist/IRDb'));
+    res.sendFile(path.join(__dirname + '/dist/IRDb/index.html'));
+});
+
+app.get('/*', (req,res,next) => {
+    res.sendFile(path.join(__dirname + '/dist/IRDb/index.html'));
 });
 
 
