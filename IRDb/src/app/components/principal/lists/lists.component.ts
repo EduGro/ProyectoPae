@@ -74,7 +74,7 @@ export class ListsComponent implements OnInit {
   }
 
   listAdd() {
-    const url = `${environment.apiUrl}addlist/?email=${localStorage.getItem('email')}`;
+    const url = `${environment.apiUrl}addlist?email=${localStorage.getItem('email')}`;
     this.httpClient.post(url, {
       nombre: this.form.value.nombre,
       desc: this.form.value.descripcion
