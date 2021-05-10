@@ -3,7 +3,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
 import { environment } from './../../../environments/environment'
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { SocialAuthService, GoogleLoginProvider } from 'angularx-social-login';
 import { AuthService } from 'src/app/common/services/auth.service';
 import { SessionService } from 'src/app/common/services/session.service';
@@ -37,6 +37,7 @@ export class RegistroComponent implements OnInit {
           }
         }
       }
+      
     });
 
     this.socialAuthService.authState.subscribe(user => {
@@ -54,18 +55,25 @@ export class RegistroComponent implements OnInit {
         console.log('Se cerro la sesion');
       }
     })
+
+
   }
 
   registrar() {
-    console.log(this.form.value)
-    const url = `${environment.apiUrl}usermongo/`;
+    const url = `${environment.apiUrl}`;
     console.log(url)
-    this.httpClient.post(url, {
+    this.httpClient.post(`${url}usermongo/`, {
       params:{},
       body: {
         nombre: this.form.value.nombre,
         correo: this.form.value.correo,
         password: this.form.value.password
+      }
+    })
+    this.httpClient.post(`${url}imagenperfil/`,{
+      params:{},
+      body:{
+        imgperfil: this.form.value.imgperfil,
       }
     })
   }
@@ -75,3 +83,4 @@ export class RegistroComponent implements OnInit {
   }
 
 }
+

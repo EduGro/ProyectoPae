@@ -34,6 +34,18 @@ app.use(cors());
 
 let db = new Database();
 
+app.use(express.static(__dirname + '/public'));
+
+const storage = multer.diskStorage({
+    destination: function(req, file, cb) {
+        cb(null, 'uploads/');
+    },
+
+    filename: function(req, file, cb) {
+        cb(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname));
+    }
+});
+
 app.use(function (req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
@@ -53,6 +65,41 @@ const googleClient = new OAuth2Client(process.env.GOOGLE_CLIENT_ID, process.env.
 
 app.listen(3000, () => {
     console.log('app is running in port 3000')
+});
+
+app.post('/usermongo',(req,res)=>{
+    console.log("usuario mongo")
+    var nombre = req.body['nombre'];
+    var correo = req.body['correo'];
+    var password = req.body['password'];
+    db.insertUser(nombre, correo, password);
+}).catch(e => {
+    console.log(e);
+    res.status(400).send('Bad Request');
+});
+
+app.post('/imagenperfil', (req, res) => {
+    console.log("imagen perfil")
+    // 'profile_pic' is the name of our file input field in the HTML form
+    let upload = multer({ storage: storage}).single(req.body.imgperfil);
+
+    upload(req, res, function(err) {
+        // req.file contains information of uploaded file
+        // req.body contains information of text fields, if there were any
+
+        if (req.fileValidationError) {
+            return res.send(req.fileValidationError);
+        }
+        else if (!req.file) {
+            return res.send('Please select an image to upload');
+        }
+        else if (err instanceof multer.MulterError) {
+            return res.send(err);
+        }
+        else if (err) {
+            return res.send(err);
+        }
+    });
 });
 
 app.get('/authgoogle', (req, res) => {
