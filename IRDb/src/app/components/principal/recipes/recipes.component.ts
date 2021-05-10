@@ -72,12 +72,10 @@ export class RecipesComponent implements OnInit {
   addToList(list: List) {
     const url = `${environment.apiUrl}addtolist/`;
     this.httpClient.post(url, {
-      body: {
         idList: list.id,
         idRecipe: this.id,
         image: this.recipe["image"],
         name: this.recipe["name"]
-      }
     }).toPromise();
     window.location.reload();
   }

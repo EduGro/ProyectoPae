@@ -279,8 +279,8 @@ app.get('/getlists', (req, res) => {
 
 app.post('/addlist', (req, res) => {
     var email = req.query['email'];
-    var nombre = req.body.body.nombre;
-    var desc = req.body.body.desc;
+    var nombre = req.body.nombre;
+    var desc = req.body.desc;
     db.insertToLists(nombre, desc).then((lista) => {
         db.searchUsers(email).then((r) => {
             db.insertToUsuariosListas(lista, r[0]._id);
@@ -346,10 +346,10 @@ app.delete('/deletelist', (req, res) => {
 });
 
 app.post('/addtolist', (req, res) => {
-    var idlist = req.body.body.idList;
-    var idrecipe = req.body.body.idRecipe;
-    db.insertRecipeToList(idlist, idrecipe, req.body.body.image, req.body.body.name);
-    res.status(200);
+    var idlist = req.body.idList;
+    var idrecipe = req.body.idRecipe;
+    db.insertRecipeToList(idlist, idrecipe, req.body.image, req.body.name);
+    res.status(200).send('ok');
 });
 
 app.get('/getrecipes', (req, res) => {
