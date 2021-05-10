@@ -17,6 +17,7 @@ var aws = require('aws-sdk');
 var multer = require('multer');
 var multerS3 = require('multer-s3');
 const request = require('request');
+const PORT = process.env.PORT || 3000;
 
 require('dotenv').config({
     path: '.env'
@@ -63,7 +64,7 @@ if (process.env.NODE_ENV === 'dev') {
 
 const googleClient = new OAuth2Client(process.env.GOOGLE_CLIENT_ID, process.env.GOOGLE_CLIENT_SECRET);
 
-app.listen(3000, () => {
+app.listen(PORT, () => {
     console.log('app is running in port 3000')
 });
 
@@ -118,7 +119,7 @@ app.get('/authgoogle', (req, res) => {
 });
 
 app.get('/', (req, res) => {
-    res.status(200).send();
+    res.status(200).send("Hello World");
 });
 
 app.post('/registrogoogle', (req, res) => {

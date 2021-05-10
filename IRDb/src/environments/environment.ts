@@ -4,7 +4,7 @@
 
 export const environment = {
   production: true,
-  apiUrl: 'https://back-end-pae-equipo4.herokuapp.com/',
+  apiUrl: 'https://proyecto-back-end-pae.mybluemix.net/',
   clientId: ''
 };
 
