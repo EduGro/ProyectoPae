@@ -280,13 +280,13 @@ app.get('/getlists', (req, res) => {
 });
 
 app.post('/addlist', (req, res) => {
-    var email = req.body.params['email'];
-    var nombre = req.body.body['nombre'];
-    var desc = req.body.body['desc'];
+    var email = req.query['email'];
+    var nombre = req.body.nombre;
+    var desc = req.body.desc;
     db.insertToLists(nombre, desc).then((lista) => {
         db.searchUsers(email).then((r) => {
             db.insertToUsuariosListas(lista, r[0]._id);
-            res.status(201);
+            res.status(201).send();
         }).catch(e => {
             console.log(e);
             res.status(400).send('Bad Request');
@@ -340,7 +340,7 @@ app.delete('/deletelist', (req, res) => {
     var email = req.query['email'];
     db.searchUsers(email).then((user) => {
         db.deleteList(user[0]._id, req.query['idList']);
-        res.status(200);
+        res.status(200).send('ok');
     }).catch(e => {
         console.log(e);
         res.status(404).send('Not Found');
@@ -393,13 +393,13 @@ const uploadFile = multer({
 });
 
 app.post('/usermongo', (req, res) => {
-    db.searchUsers(req.body.body['correo']).then((user) => {
+    db.searchUsers(req.body['correo']).then((user) => {
         if (user.length == 0) {
             let user = {
-                "name": req.body.body['nombre'],
-                "email": req.body.body['correo'],
-                "password": req.body.body['password'],
-                "token": (Math.floor(Math.random() * 100) + 1) + req.body.body['nombre'].substring(0, 3) + req.body.body['correo'].substring(0, 5),
+                "name": req.body['nombre'],
+                "email": req.body['correo'],
+                "password": req.body['password'],
+                "token": (Math.floor(Math.random() * 100) + 1) + req.body['nombre'].substring(0, 3) + req.body['correo'].substring(0, 5),
             }
             db.insertUser(user, 'https://pbs.twimg.com/profile_images/1056643396507459585/-jhnJW4v.jpg');
             
